@@ -1,0 +1,144 @@
+/*
+SQLyog Ultimate v10.00 Beta1
+MySQL - 5.5.5-10.4.25-MariaDB : Database - fitnessmaster
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`fitnessmaster` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+
+USE `fitnessmaster`;
+
+/*Table structure for table `exercise` */
+
+DROP TABLE IF EXISTS `exercise`;
+
+CREATE TABLE `exercise` (
+  `exerciseID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `bodyPart` varchar(100) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  PRIMARY KEY (`exerciseID`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `exercise` */
+
+insert  into `exercise`(`exerciseID`,`name`,`bodyPart`,`category`) values (11,'Bench Press','CHEST','BARBELL'),(12,'Bench Press','CHEST','DUMBBELL'),(13,'Incline Bench Press','CHEST','BARBELL'),(14,'Incline Bench Press','CHEST','DUMBBELL'),(15,'Chest Press','CHEST','MACHINE'),(16,'Squat','LEGS','BARBELL'),(17,'Lunge','LEGS','BARBELL'),(18,'Lunge','ARMS','DUMBBELL'),(19,'Bicep Curl','ARMS','BARBELL'),(20,'Bicep Curl','ARMS','DUMBBELL'),(21,'Overhead Press','SHOULDERS','BARBELL'),(22,'Seated Overhead Press','SHOULDERS','BARBELL'),(23,'Deadlift','BACK','BARBELL'),(24,'Bent-Over Row','BACK','BARBELL'),(25,'Pull Up','BACK','BODYWEIGHT'),(26,'Seated Row','BACK','MACHINE'),(27,'Triceps Extension','ARMS','MACHINE'),(28,'Skullcrusher','ARMS','BARBELL');
+
+/*Table structure for table `member` */
+
+DROP TABLE IF EXISTS `member`;
+
+CREATE TABLE `member` (
+  `memberID` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(100) NOT NULL,
+  `lastName` varchar(100) NOT NULL,
+  `gender` varchar(20) DEFAULT NULL,
+  `address` varchar(100) DEFAULT NULL,
+  `phoneNumber` varchar(20) DEFAULT NULL,
+  `dateOfBirth` date DEFAULT NULL,
+  PRIMARY KEY (`memberID`)
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `member` */
+
+insert  into `member`(`memberID`,`firstName`,`lastName`,`gender`,`address`,`phoneNumber`,`dateOfBirth`) values (3,'Michael','Williamson','MALE','1600 Pennsylvania Avenue, Washington, D.C.','3227725598','1964-01-10'),(4,'Frank','Alderson','MALE','31 Spooner Street, Quahog, Rhode Island','5277183827','1974-10-05'),(5,'Michael','Specter','MALE','1600 Pennsylvania Avenue, Washington, D.C.','1646765966','1981-10-29'),(6,'John','Specter','FEMALE','350 Fifth Avenue, New York City, NY','9069933544','1974-12-09'),(7,'Frank','Cooper','FEMALE','350 Fifth Avenue, New York City, NY','6948385683','1985-01-04'),(8,'Emma','Williamson','FEMALE','24 Oil Drum Lane, Shepherd\'s Bush, London','1031653319','1970-07-25'),(9,'Sophia','Richardson','FEMALE','17 Cherry Tree Lane, London','8981075403','1959-02-25'),(10,'Michael','Richardson','MALE','1600 Pennsylvania Avenue, Washington, D.C.','5081515987','1957-08-29'),(11,'Max','Wellington','MALE','698 Candlewood Lane, Cabot Cove, Maine','1394545768','1960-03-11'),(12,'Rick','Wellington','MALE','1313 Mockingbird Lane, Mockingbird Heights','6196147795','1955-12-21'),(13,'Bobby','Dalton','FEMALE','9764 Jeopardy Lane, Chicago, Illinois','2860218285','1970-03-02'),(14,'Emma','Cooper','MALE','24 Oil Drum Lane, Shepherd\'s Bush, London','4212764431','1974-09-02'),(15,'Alex','Allen','MALE','1600 Pennsylvania Avenue, Washington, D.C.','9824545321','2000-03-20'),(16,'Bobby','Paulsen','FEMALE','698 Candlewood Lane, Cabot Cove, Maine','9652900574','1978-08-13'),(17,'Daniel','Specter','FEMALE','9764 Jeopardy Lane, Chicago, Illinois','3684895568','1981-08-13'),(18,'Anna','Dalton','FEMALE','9764 Jeopardy Lane, Chicago, Illinois','5924279630','1953-06-12'),(19,'Anna','Williamson','MALE','1313 Mockingbird Lane, Mockingbird Heights','9862633600','1969-04-15'),(20,'Emma','Axelrod','FEMALE','52 Festive Road, Putney, London','0869775845','1997-04-27'),(21,'Sophia','Wellington','FEMALE','30 St Mary Axe, London','7537884931','1961-10-07'),(22,'Anna','Specter','FEMALE','52 Festive Road, Putney, London','8492478905','1997-07-29'),(23,'Alex','Specter','FEMALE','221B Baker St., London','6665358619','1953-04-23'),(24,'Sarah','Paulsen','MALE','698 Candlewood Lane, Cabot Cove, Maine','3000887230','1980-06-13'),(25,'Michael','Alderson','FEMALE','7 Savile Row, Burlington Gardens, London','1018219336','1976-05-24'),(26,'Max','Richardson','MALE','9764 Jeopardy Lane, Chicago, Illinois','3363940010','1991-03-13'),(27,'Morgan','Axelrod','MALE','7 Savile Row, Burlington Gardens, London','1379552883','1953-10-14'),(29,'Uros','Urosevic','MALE',NULL,'063/80-87-100','2022-12-06'),(30,'Marko','Aksentijevic','FEMALE',NULL,'063/12-34-567','2022-12-13'),(31,'Petar','Petrovic','MALE','Takovska 10','060/12-13-598','2000-04-08');
+
+/*Table structure for table `membership` */
+
+DROP TABLE IF EXISTS `membership`;
+
+CREATE TABLE `membership` (
+  `memberID` int(11) NOT NULL,
+  `packageID` int(11) NOT NULL,
+  `startDate` date DEFAULT NULL,
+  `endDate` date DEFAULT NULL,
+  PRIMARY KEY (`memberID`,`packageID`),
+  KEY `packageID` (`packageID`),
+  CONSTRAINT `membership_ibfk_1` FOREIGN KEY (`memberID`) REFERENCES `member` (`memberID`),
+  CONSTRAINT `membership_ibfk_2` FOREIGN KEY (`packageID`) REFERENCES `package` (`packageID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `membership` */
+
+/*Table structure for table `package` */
+
+DROP TABLE IF EXISTS `package`;
+
+CREATE TABLE `package` (
+  `packageID` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `price` double unsigned NOT NULL,
+  PRIMARY KEY (`packageID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `package` */
+
+insert  into `package`(`packageID`,`name`,`price`) values (1,'Cardio 30',2000),(2,'Cardio 180',11000),(3,'Cardio 360',20000),(4,'Bodyfit 30',2500),(5,'Bodyfit 180',12000),(6,'Bodyfit 360',23000),(7,'Personal 7',15000),(8,'Personal 30',25000);
+
+/*Table structure for table `trainer` */
+
+DROP TABLE IF EXISTS `trainer`;
+
+CREATE TABLE `trainer` (
+  `trainerID` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(100) NOT NULL,
+  `lastName` varchar(100) NOT NULL,
+  `hireDate` date NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  PRIMARY KEY (`trainerID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `trainer` */
+
+insert  into `trainer`(`trainerID`,`firstName`,`lastName`,`hireDate`,`username`,`password`) values (1,'Admin','Admin','1970-01-01','admin','admin'),(2,'Uros','Gavrilovic','2022-05-17','uros','uros');
+
+/*Table structure for table `workoutactivity` */
+
+DROP TABLE IF EXISTS `workoutactivity`;
+
+CREATE TABLE `workoutactivity` (
+  `workoutPlanID` int(11) NOT NULL,
+  `ordinalNumber` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sets` int(10) unsigned NOT NULL,
+  `reps` int(10) unsigned NOT NULL,
+  `exerciseID` int(11) NOT NULL,
+  PRIMARY KEY (`workoutPlanID`,`ordinalNumber`),
+  KEY `ordinalNumber` (`ordinalNumber`),
+  KEY `exerciseID` (`exerciseID`),
+  CONSTRAINT `workoutactivity_ibfk_1` FOREIGN KEY (`workoutPlanID`) REFERENCES `workoutplan` (`workoutPlanID`),
+  CONSTRAINT `workoutactivity_ibfk_2` FOREIGN KEY (`exerciseID`) REFERENCES `exercise` (`exerciseID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `workoutactivity` */
+
+/*Table structure for table `workoutplan` */
+
+DROP TABLE IF EXISTS `workoutplan`;
+
+CREATE TABLE `workoutplan` (
+  `workoutPlanID` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `memberID` int(11) NOT NULL,
+  `trainerID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`workoutPlanID`),
+  KEY `memberID` (`memberID`),
+  KEY `trainerID` (`trainerID`),
+  CONSTRAINT `workoutplan_ibfk_1` FOREIGN KEY (`memberID`) REFERENCES `member` (`memberID`),
+  CONSTRAINT `workoutplan_ibfk_2` FOREIGN KEY (`trainerID`) REFERENCES `trainer` (`trainerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `workoutplan` */
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

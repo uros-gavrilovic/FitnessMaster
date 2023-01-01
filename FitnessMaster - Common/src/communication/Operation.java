@@ -1,0 +1,9 @@
+package communication;
+
+public enum Operation {
+    LOG_IN, DISCONNECT,
+    ADD_MEMBER, ADD_EXERCISE,
+    DELETE_MEMBER, DELETE_EXERCISE,
+    UPDATE_MEMBER, UPDATE_EXERCISE,
+    GET_MEMBERS, GET_EXERCISES;
+}
