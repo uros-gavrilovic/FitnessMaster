@@ -263,7 +263,7 @@ public class AddMemberPanel extends javax.swing.JPanel {
 
             LocalDate birthDate;
             if (!txtBirthDate.getText().isBlank()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
                 birthDate = LocalDate.parse(txtBirthDate.getText(), formatter);
             } else {
                 birthDate = null;
@@ -342,7 +342,7 @@ public class AddMemberPanel extends javax.swing.JPanel {
         }
 
         if (!txtBirthDate.getText().trim().isEmpty()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
             LocalDate birthDate = LocalDate.parse(txtBirthDate.getText(), formatter);
             if (birthDate.isAfter(LocalDate.now()) || birthDate.isEqual(LocalDate.now())) {
                 txtBirthDate.setBorder(redBorder);
