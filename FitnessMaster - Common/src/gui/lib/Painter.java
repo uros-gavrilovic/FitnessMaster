@@ -15,14 +15,12 @@ public class Painter {
      public static void setOnHoverColor(AbstractButton btn) {
           if (!btn.isEnabled()) return;
           
-          System.err.println("HOVER ACTIVE: " + btn.getText());
           btn.setBackground(Painter.GREEN);
           btn.setForeground(Painter.DARK);
      }
-
      public static void setOffHoverColor(AbstractButton btn) {
           if (!btn.isEnabled()) return;
-                    System.err.println("HOVER DEACTIVATED: " + btn.getText());
+          
           btn.setBackground(Painter.DARK);
           btn.setForeground(Color.WHITE);
      }

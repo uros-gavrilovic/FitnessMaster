@@ -5,6 +5,7 @@ import gui.lib.Painter;
 import javax.swing.JPanel;
 import gui.panels.*;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -213,7 +214,7 @@ public class ServerForm extends javax.swing.JFrame {
           openPanel(new DashboardPanel(server));
      }//GEN-LAST:event_tbtnDashboardActionPerformed
      private void tbtnClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnClientsActionPerformed
-          openPanel(new ClientsPanel(server));
+          openPanel(new ClientsPanel(server, new ArrayList<>()));
      }//GEN-LAST:event_tbtnClientsActionPerformed
      private void tbtnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSettingsActionPerformed
           openPanel(new SettingsPanel(server));
