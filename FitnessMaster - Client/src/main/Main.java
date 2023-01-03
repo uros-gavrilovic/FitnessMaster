@@ -1,10 +1,10 @@
 package main;
 
-import gui.MainMenu;
+import gui.MainMenuForm;
 
 public class Main {
     public static void main(String[] args) {
-            MainMenu mainMenu = new MainMenu();
+            MainMenuForm mainMenu = new MainMenuForm();
             mainMenu.setVisible(true);
     }
 }

@@ -1,5 +1,6 @@
 package gui.panels;
 
+import gui.lib.Painter;
 import com.raven.datechooser.*;
 import communication.Operation;
 import communication.Receiver;

@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.MouseMotionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
-import gui.lib.Painter;
 
 public class KGradientPanel extends JPanel {
     public Color kStartColor = Painter.GREEN;
