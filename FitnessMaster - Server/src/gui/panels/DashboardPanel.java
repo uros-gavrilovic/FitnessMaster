@@ -4,6 +4,7 @@ import gui.lib.*;
 import java.awt.Color;
 import server.Server;
 import java.awt.event.KeyEvent;
+import javax.swing.JButton;
 import lib.PrintStream;
 
 public class DashboardPanel extends javax.swing.JPanel {
@@ -29,12 +30,6 @@ public class DashboardPanel extends javax.swing.JPanel {
           lblStatus = new javax.swing.JLabel();
           btnStatus = new javax.swing.JButton();
 
-          addKeyListener(new java.awt.event.KeyAdapter() {
-               public void keyPressed(java.awt.event.KeyEvent evt) {
-                    formKeyPressed(evt);
-               }
-          });
-
           lblLogs.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
           lblLogs.setText("CONSOLE LOGS:");
 
@@ -53,10 +48,21 @@ public class DashboardPanel extends javax.swing.JPanel {
           lblStatus.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
           lblStatus.setText("SERVER STATUS:");
 
+          btnStatus.setBackground(Painter.DARK);
           btnStatus.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+          btnStatus.setForeground(new java.awt.Color(255, 255, 255));
           btnStatus.setText("<status>");
+          btnStatus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
           btnStatus.setFocusable(false);
           btnStatus.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+          btnStatus.addMouseListener(new java.awt.event.MouseAdapter() {
+               public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    btnStatusMouseEntered(evt);
+               }
+               public void mouseExited(java.awt.event.MouseEvent evt) {
+                    btnStatusMouseExited(evt);
+               }
+          });
           btnStatus.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnStatusActionPerformed(evt);
@@ -110,16 +116,12 @@ public class DashboardPanel extends javax.swing.JPanel {
           }
      }//GEN-LAST:event_btnStatusActionPerformed
 
-     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-          switch (evt.getKeyCode()) {
-               case KeyEvent.VK_ENTER:
-                    btnStatusActionPerformed(null);
-                    break;
-               case KeyEvent.VK_ESCAPE:
-                    //
-                    break;
-        }
-     }//GEN-LAST:event_formKeyPressed
+     private void btnStatusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatusMouseEntered
+          Painter.setOnHoverColor((JButton) evt.getSource());
+     }//GEN-LAST:event_btnStatusMouseEntered
+     private void btnStatusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatusMouseExited
+          Painter.setOffHoverColor((JButton) evt.getSource());
+     }//GEN-LAST:event_btnStatusMouseExited
 
 
      // Variables declaration - do not modify//GEN-BEGIN:variables

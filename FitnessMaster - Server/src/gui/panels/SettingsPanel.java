@@ -1,5 +1,6 @@
 package gui.panels;
 
+import gui.lib.Painter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -10,6 +11,7 @@ import java.text.ParseException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -175,21 +177,43 @@ public class SettingsPanel extends javax.swing.JPanel {
                          .addContainerGap(95, Short.MAX_VALUE)))
           );
 
+          btnSave.setBackground(Painter.DARK);
           btnSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+          btnSave.setForeground(new java.awt.Color(255, 255, 255));
           btnSave.setText("SAVE SETTINGS");
+          btnSave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
           btnSave.setEnabled(false);
           btnSave.setFocusable(false);
           btnSave.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+          btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
+               public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    btnSaveMouseEntered(evt);
+               }
+               public void mouseExited(java.awt.event.MouseEvent evt) {
+                    btnSaveMouseExited(evt);
+               }
+          });
           btnSave.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnSaveActionPerformed(evt);
                }
           });
 
+          btnDefault.setBackground(Painter.DARK);
           btnDefault.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+          btnDefault.setForeground(new java.awt.Color(255, 255, 255));
           btnDefault.setText("RESET TO DEFAULT");
+          btnDefault.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
           btnDefault.setFocusable(false);
           btnDefault.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+          btnDefault.addMouseListener(new java.awt.event.MouseAdapter() {
+               public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    btnDefaultMouseEntered(evt);
+               }
+               public void mouseExited(java.awt.event.MouseEvent evt) {
+                    btnDefaultMouseExited(evt);
+               }
+          });
           btnDefault.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnDefaultActionPerformed(evt);
@@ -284,6 +308,22 @@ public class SettingsPanel extends javax.swing.JPanel {
           changesMade = true;
           btnSave.setEnabled(true);
      }//GEN-LAST:event_ftxtPortKeyTyped
+
+     private void btnSaveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseEntered
+          Painter.setOnHoverColor((JButton) evt.getSource());
+     }//GEN-LAST:event_btnSaveMouseEntered
+
+     private void btnSaveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSaveMouseExited
+          Painter.setOffHoverColor((JButton) evt.getSource());
+     }//GEN-LAST:event_btnSaveMouseExited
+
+     private void btnDefaultMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDefaultMouseEntered
+          Painter.setOnHoverColor((JButton) evt.getSource());
+     }//GEN-LAST:event_btnDefaultMouseEntered
+
+     private void btnDefaultMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDefaultMouseExited
+          Painter.setOffHoverColor((JButton) evt.getSource());
+     }//GEN-LAST:event_btnDefaultMouseExited
 
      // Variables declaration - do not modify//GEN-BEGIN:variables
      private javax.swing.JButton btnDefault;

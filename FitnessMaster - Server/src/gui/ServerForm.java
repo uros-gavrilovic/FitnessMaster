@@ -5,6 +5,7 @@ import gui.lib.Painter;
 import javax.swing.JPanel;
 import gui.panels.*;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -46,11 +47,6 @@ public class ServerForm extends javax.swing.JFrame {
           addWindowListener(new java.awt.event.WindowAdapter() {
                public void windowClosing(java.awt.event.WindowEvent evt) {
                     formWindowClosing(evt);
-               }
-          });
-          addKeyListener(new java.awt.event.KeyAdapter() {
-               public void keyPressed(java.awt.event.KeyEvent evt) {
-                    formKeyPressed(evt);
                }
           });
 
@@ -229,10 +225,6 @@ public class ServerForm extends javax.swing.JFrame {
                System.exit(0);
           }
      }//GEN-LAST:event_formWindowClosing
-
-     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-          // TODO add your handling code here:
-     }//GEN-LAST:event_formKeyPressed
 
      private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
           formWindowClosing(null);
