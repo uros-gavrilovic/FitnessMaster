@@ -1,18 +1,23 @@
 package server;
 
+import domain.Trainer;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Properties;
 import thread.ClientHandler;
 
 public class Server {
-
      boolean alive;
      ServerSocket serverSocket;
      Socket socket;
+     ArrayList<ClientHandler> activeClients;
 
      public Server() {
           this.alive = false;
+          activeClients = new ArrayList<>();
      }
 
      public boolean isAlive() {
@@ -35,8 +40,13 @@ public class Server {
      }
 
      public void startServer() throws IOException {
-          System.out.println("SERVER: Starting server...");
-          serverSocket = new ServerSocket(9000);
+          Properties serverProperties = new Properties();
+          serverProperties.load(new FileInputStream("config/serverConfig.properties"));
+
+          String serverPort = serverProperties.getProperty("port");
+          
+          System.out.println("SERVER: Starting server on port " + serverPort + "...");
+          serverSocket = new ServerSocket(Integer.valueOf(serverPort));
           alive = true;
 
 //          while (true) {

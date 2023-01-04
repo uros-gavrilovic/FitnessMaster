@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class AddMemberPanel extends javax.swing.JPanel {
-
     Socket socket;
 
     public AddMemberPanel(Socket socket) {
@@ -286,7 +285,6 @@ public class AddMemberPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Error while adding new member!\n" + ex.getMessage(), "Adding new member", JOptionPane.ERROR_MESSAGE);
             }
     }//GEN-LAST:event_btnSaveMemberActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSaveMember;
