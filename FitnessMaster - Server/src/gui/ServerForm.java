@@ -36,12 +36,13 @@ public class ServerForm extends javax.swing.JFrame {
           lblProperties = new javax.swing.JLabel();
           tbtnSettings = new javax.swing.JToggleButton();
           lblActions = new javax.swing.JLabel();
-          tbtnExit = new javax.swing.JToggleButton();
+          btnExit = new javax.swing.JButton();
           pnlCenter = new DashboardPanel(server);
 
           setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
           setTitle("FitnessMaster - Server");
           setResizable(false);
+          setSize(new java.awt.Dimension(1050, 578));
           addWindowListener(new java.awt.event.WindowAdapter() {
                public void windowClosing(java.awt.event.WindowEvent evt) {
                     formWindowClosing(evt);
@@ -171,26 +172,18 @@ public class ServerForm extends javax.swing.JFrame {
           lblActions.setPreferredSize(new java.awt.Dimension(210, 0));
           pnlWest.add(lblActions);
 
-          tbtnExit.setBackground(Painter.DARK);
-          tbtnExit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-          tbtnExit.setForeground(new java.awt.Color(255, 255, 255));
-          tbtnExit.setText("EXIT");
-          tbtnExit.setBorder(null);
-          tbtnExit.setBorderPainted(false);
-          tbtnExit.setContentAreaFilled(false);
-          tbtnExit.setFocusable(false);
-          tbtnExit.setOpaque(true);
-          tbtnExit.addChangeListener(new javax.swing.event.ChangeListener() {
-               public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    tbtnExitStateChanged(evt);
-               }
-          });
-          tbtnExit.addActionListener(new java.awt.event.ActionListener() {
+          btnExit.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+          btnExit.setForeground(new java.awt.Color(255, 255, 255));
+          btnExit.setText("EXIT");
+          btnExit.setBorder(null);
+          btnExit.setContentAreaFilled(false);
+          btnExit.setFocusable(false);
+          btnExit.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    tbtnExitActionPerformed(evt);
+                    btnExitActionPerformed(evt);
                }
           });
-          pnlWest.add(tbtnExit);
+          pnlWest.add(btnExit);
 
           getContentPane().add(pnlWest, java.awt.BorderLayout.LINE_START);
 
@@ -219,9 +212,6 @@ public class ServerForm extends javax.swing.JFrame {
      private void tbtnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSettingsActionPerformed
           openPanel(new SettingsPanel(server));
      }//GEN-LAST:event_tbtnSettingsActionPerformed
-     private void tbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnExitActionPerformed
-          // TODO add your handling code here:
-     }//GEN-LAST:event_tbtnExitActionPerformed
 
      private void tbtnDashboardStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbtnDashboardStateChanged
           setUpToggleButton((JToggleButton) evt.getSource());
@@ -232,9 +222,6 @@ public class ServerForm extends javax.swing.JFrame {
      private void tbtnSettingsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbtnSettingsStateChanged
           setUpToggleButton((JToggleButton) evt.getSource());
      }//GEN-LAST:event_tbtnSettingsStateChanged
-     private void tbtnExitStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tbtnExitStateChanged
-          setUpToggleButton((JToggleButton) evt.getSource());
-     }//GEN-LAST:event_tbtnExitStateChanged
 
      private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
           int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit server client?\nThis will result in clients disconnecting from the server.", "Exit confirmation", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -247,7 +234,12 @@ public class ServerForm extends javax.swing.JFrame {
           // TODO add your handling code here:
      }//GEN-LAST:event_formKeyPressed
 
+     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+          formWindowClosing(null);
+     }//GEN-LAST:event_btnExitActionPerformed
+
      // Variables declaration - do not modify//GEN-BEGIN:variables
+     private javax.swing.JButton btnExit;
      private javax.swing.JLabel jLabel1;
      private javax.swing.JLabel lblActions;
      private javax.swing.JLabel lblInfo;
@@ -257,7 +249,6 @@ public class ServerForm extends javax.swing.JFrame {
      private javax.swing.JPanel pnlWest;
      private javax.swing.JToggleButton tbtnClients;
      private javax.swing.JToggleButton tbtnDashboard;
-     private javax.swing.JToggleButton tbtnExit;
      private javax.swing.JToggleButton tbtnSettings;
      // End of variables declaration//GEN-END:variables
 
@@ -290,11 +281,12 @@ public class ServerForm extends javax.swing.JFrame {
           tbtn.setForeground(Color.WHITE);
      }
      private void prepareForm() {
+          this.setLocationRelativeTo(null);
+          
           ButtonGroup tbtnGroup = new ButtonGroup();
           tbtnGroup.add(tbtnDashboard);
           tbtnGroup.add(tbtnClients);
           tbtnGroup.add(tbtnSettings);
-          tbtnGroup.add(tbtnExit);
 
           openPanel(new DashboardPanel(server));
           tbtnDashboard.setSelected(true);
