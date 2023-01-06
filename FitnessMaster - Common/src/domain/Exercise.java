@@ -1,9 +1,15 @@
 package domain;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Exercise implements Serializable {
+public class Exercise implements Serializable, GenericEntity {
     int exerciseID;
     String name;
     Category category;
@@ -73,4 +79,38 @@ public class Exercise implements Serializable {
     public void setBodyPart(BodyPart bodyPart) {
         this.bodyPart = bodyPart;
     }
+
+    @Override
+     public String getTableName() {
+          return this.getClass().getSimpleName();
+     }
+     @Override
+     public ArrayList<String> getColumnNames() {
+         ArrayList<String> columnNames = new ArrayList();
+         for(Field f : this.getClass().getDeclaredFields()){
+              columnNames.add(f.getName());
+         }
+         return columnNames;
+     }
+     @Override
+     public ArrayList<Object> getColumnValues() {
+          ArrayList<Object> columnValues = new ArrayList<>();
+          ArrayList<String> columnNames = getColumnNames();
+          for(String columnName : columnNames){
+               try {
+                    Field field = this.getClass().getDeclaredField(columnName);
+                    field.setAccessible(true);
+                    Object value = field.get(this);
+                    columnValues.add(value);
+               } catch (Exception ex) {
+                    Logger.getLogger(Exercise.class.getName()).log(Level.SEVERE, null, ex);
+               } 
+               
+          }
+          return columnValues;
+     }
+     @Override
+     public void setId(int id) {
+          setExerciseID(id);
+     }
 }

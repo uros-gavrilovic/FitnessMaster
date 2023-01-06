@@ -4,6 +4,8 @@ import domain.Exercise;
 import domain.Member;
 import domain.Trainer;
 import java.util.ArrayList;
+import operation.AbstractGenericOperation;
+import operation.exercise.InsertExercise;
 import repo.Repository;
 import repo.db.*;
 import repo.db.impl.DbRepositoryExercise;
@@ -55,15 +57,18 @@ public class Controller {
         }
     }
     public void addExercise(Exercise exercise) throws Exception {
-        ((DatabaseRepository) repoExercise).connect();
-        try {
-            repoExercise.insert(exercise);
-            ((DatabaseRepository) repoExercise).commit();
-        } catch (Exception ex) {
-            ((DatabaseRepository) repoExercise).rollback();
-        } finally {
-            ((DatabaseRepository) repoExercise).disconnect();
-        }
+//        ((DatabaseRepository) repoExercise).connect();
+//        try {
+//            repoExercise.insert(exercise);
+//            ((DatabaseRepository) repoExercise).commit();
+//        } catch (Exception ex) {
+//            ((DatabaseRepository) repoExercise).rollback();
+//        } finally {
+//            ((DatabaseRepository) repoExercise).disconnect();
+//        }
+
+        AbstractGenericOperation operation = new InsertExercise();
+        operation.execute(exercise);
     }
 
     public void deleteMember(Member member) throws Exception {
