@@ -211,7 +211,7 @@ public class ServerForm extends javax.swing.JFrame {
           openPanel(new DashboardPanel(server));
      }//GEN-LAST:event_tbtnDashboardActionPerformed
      private void tbtnClientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnClientsActionPerformed
-          openPanel(new ClientsPanel(server, new ArrayList<>()));
+          openPanel(new ClientsPanel(server));
      }//GEN-LAST:event_tbtnClientsActionPerformed
      private void tbtnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbtnSettingsActionPerformed
           openPanel(new SettingsPanel(server));

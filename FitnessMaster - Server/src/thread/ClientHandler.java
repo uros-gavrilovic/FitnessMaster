@@ -15,23 +15,24 @@ import java.util.logging.Logger;
 
 public class ClientHandler extends Thread {
     Socket socket;
-    Request request;
-    Response response;
+    Sender sender;
+    Receiver receiver;
+    Trainer client;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
-        this.request = new Request();
-        this.response = new Response();
+        this.sender = new Sender(socket);
+        this.receiver = new Receiver(socket);
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-                request = (Request) new Receiver(socket).receive();
+                Request request = (Request) new Receiver(socket).receive();
                 System.out.println(request); 
                 
-                response = new Response();
+                Response response = new Response();
                 
                 if (request != null) {
                     switch (request.getOperation()) {
@@ -41,6 +42,7 @@ public class ClientHandler extends Thread {
                                 String password = ((Trainer) request.getArgument()).getPassword();
 
                                 Trainer trainer = Controller.getInstance().login(username, password);
+                                this.client = trainer;
                                 response.setResponseType(ResponseType.SUCCESS);
                                 response.setResult(trainer);
                             } catch (Exception ex) {
@@ -155,16 +157,10 @@ public class ClientHandler extends Thread {
      public void setSocket(Socket socket) {
           this.socket = socket;
      }
-     public Request getRequest() {
-          return request;
+     public Trainer getClient() {
+          return client;
      }
-     public void setRequest(Request request) {
-          this.request = request;
-     }
-     public Response getResponse() {
-          return response;
-     }
-     public void setResponse(Response response) {
-          this.response = response;
-     }
+     public void setClient(Trainer client) {
+          this.client = client;
+     } 
 }

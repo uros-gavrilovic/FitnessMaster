@@ -10,11 +10,11 @@ public class ClientsPanel extends javax.swing.JPanel {
      Server server;
      ArrayList<Trainer> clients;
      
-     public ClientsPanel(Server server, ArrayList<Trainer> clients) {
+     public ClientsPanel(Server server) {
           this.server = server;
-          this.clients = clients;
           
           initComponents();
+          prepareForm();
      }
 
      @SuppressWarnings("unchecked")
@@ -22,11 +22,10 @@ public class ClientsPanel extends javax.swing.JPanel {
      private void initComponents() {
 
           jScrollPane1 = new javax.swing.JScrollPane();
-          jTable1 = new javax.swing.JTable();
+          table = new javax.swing.JTable();
 
-          jTable1.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-          jTable1.setModel(new ClientsTableModel(clients));
-          jScrollPane1.setViewportView(jTable1);
+          table.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+          jScrollPane1.setViewportView(table);
 
           javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
           this.setLayout(layout);
@@ -49,6 +48,12 @@ public class ClientsPanel extends javax.swing.JPanel {
 
      // Variables declaration - do not modify//GEN-BEGIN:variables
      private javax.swing.JScrollPane jScrollPane1;
-     private javax.swing.JTable jTable1;
+     private javax.swing.JTable table;
      // End of variables declaration//GEN-END:variables
+
+     private void prepareForm() {
+          if (server == null) return;
+     
+          table.setModel(new ClientsTableModel(clients));
+     }
 }

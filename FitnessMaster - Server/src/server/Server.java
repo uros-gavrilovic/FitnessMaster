@@ -63,7 +63,17 @@ public class Server extends Thread{
      public void setSocket(Socket socket) {
           this.socket = socket;
      }
-
+     public ArrayList<Trainer> getActiveClients() {
+          ArrayList<Trainer> activeTrainers = new ArrayList<>();
+          
+          for(ClientHandler ch : activeClients){
+               activeTrainers.add(ch.getClient());
+          }
+          
+          return activeTrainers;
+     }
+     
+     
      public void stopServer() throws IOException {
           System.out.println("SERVER: Stopping server...");
 
