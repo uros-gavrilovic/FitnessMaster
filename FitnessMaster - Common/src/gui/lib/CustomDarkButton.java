@@ -20,6 +20,9 @@ public class CustomDarkButton extends JButton {
     public CustomDarkButton() {
         setBackgroundColor(Painter.DARK);
         setForegroundColor(Color.WHITE);
+        setBorder(new javax.swing.border.LineBorder(Painter.DARK, 3, true));
+        setFocusable(false);
+        
         colorOver = Painter.GREEN;
         colorClick = new Color(152, 184, 144);
         borderColor = Painter.DARK;
@@ -28,6 +31,7 @@ public class CustomDarkButton extends JButton {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
+                 if (!isEnabled()) return;
                  setBackground(colorOver);
                  setForeground(Painter.DARK);
                  over = true;

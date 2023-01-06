@@ -6,9 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JButton;
+import javax.swing.JToggleButton;
 
-public class CustomLightButton extends JButton {
+public class CustomDarkToggleButton extends JToggleButton {
     private boolean over;
     private Color backgroundColor;
     private Color foregroundColor;
@@ -17,21 +17,20 @@ public class CustomLightButton extends JButton {
     private Color borderColor;
     private int radius = 0;
      
-    public CustomLightButton() {
+    public CustomDarkToggleButton() {
         setBackgroundColor(Painter.DARK);
         setForegroundColor(Color.WHITE);
-        setBorder(new javax.swing.border.LineBorder(Painter.LIGHT, 3, true));
+        setBorder(new javax.swing.border.LineBorder(Painter.DARK, 3, true));
         setFocusable(false);
-         
+        
         colorOver = Painter.GREEN;
         colorClick = new Color(152, 184, 144);
-        borderColor = Color.WHITE;
+        borderColor = Painter.DARK;
         setContentAreaFilled(false);
         
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent me) {
-                 if(!isEnabled()) return;
                  setBackground(colorOver);
                  setForeground(Painter.DARK);
                  over = true;

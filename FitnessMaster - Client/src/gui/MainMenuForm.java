@@ -1,7 +1,7 @@
 package gui;
 
 import javax.swing.*;
-import gui.lib.ImageResizer;
+import gui.lib.*;
 import client.Client;
 import gui.lib.Painter;
 import java.awt.event.KeyEvent;
@@ -20,9 +20,9 @@ public class MainMenuForm extends javax.swing.JFrame {
      private void initComponents() {
 
           panel = new javax.swing.JPanel();
-          btnStart = new javax.swing.JButton();
-          btnSettings = new javax.swing.JButton();
-          btnExit = new javax.swing.JButton();
+          btnStart = new CustomLightButton();
+          btnSettings = new CustomLightButton();
+          btnExit = new CustomLightButton();
           lblLogo = new javax.swing.JLabel();
 
           setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -39,53 +39,24 @@ public class MainMenuForm extends javax.swing.JFrame {
 
           panel.setBackground(Painter.DARK);
 
-          btnStart.setBackground(Painter.DARK);
           btnStart.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-          btnStart.setForeground(Painter.LIGHT);
           btnStart.setText("START PROGRAM");
-          btnStart.setBorder(new javax.swing.border.LineBorder(Painter.LIGHT, 3, true));
-          btnStart.setFocusable(false);
-          btnStart.addMouseListener(new java.awt.event.MouseAdapter() {
-               public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    btnStartMouseEntered(evt);
-               }
-               public void mouseExited(java.awt.event.MouseEvent evt) {
-                    btnStartMouseExited(evt);
-               }
-          });
           btnStart.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnStartActionPerformed(evt);
                }
           });
 
-          btnSettings.setBackground(Painter.DARK);
           btnSettings.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-          btnSettings.setForeground(Painter.LIGHT);
           btnSettings.setText("SETTINGS");
-          btnSettings.setBorder(new javax.swing.border.LineBorder(Painter.LIGHT, 3, true));
-          btnSettings.setEnabled(false);
-          btnSettings.setFocusable(false);
           btnSettings.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnSettingsActionPerformed(evt);
                }
           });
 
-          btnExit.setBackground(Painter.DARK);
           btnExit.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-          btnExit.setForeground(Painter.LIGHT);
           btnExit.setText("EXIT");
-          btnExit.setBorder(new javax.swing.border.LineBorder(Painter.LIGHT, 3, true));
-          btnExit.setFocusable(false);
-          btnExit.addMouseListener(new java.awt.event.MouseAdapter() {
-               public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    btnExitMouseEntered(evt);
-               }
-               public void mouseExited(java.awt.event.MouseEvent evt) {
-                    btnExitMouseExited(evt);
-               }
-          });
           btnExit.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnExitActionPerformed(evt);
@@ -160,18 +131,6 @@ public class MainMenuForm extends javax.swing.JFrame {
     private void btnSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSettingsActionPerformed
 
     }//GEN-LAST:event_btnSettingsActionPerformed
-    private void btnStartMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartMouseEntered
-        Painter.setOnHoverColor((JButton) evt.getSource());
-    }//GEN-LAST:event_btnStartMouseEntered
-    private void btnStartMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStartMouseExited
-        Painter.setOffHoverColor((JButton) evt.getSource());
-    }//GEN-LAST:event_btnStartMouseExited
-    private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
-        Painter.setOnHoverColor((JButton) evt.getSource());
-    }//GEN-LAST:event_btnExitMouseEntered
-    private void btnExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
-        Painter.setOffHoverColor((JButton) evt.getSource());
-    }//GEN-LAST:event_btnExitMouseExited
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         keyboardShortcutEvent(evt);
     }//GEN-LAST:event_formKeyPressed

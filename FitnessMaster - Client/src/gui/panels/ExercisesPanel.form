@@ -259,11 +259,13 @@
               <Font name="Segoe UI" size="18" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="CREATE EXERCISE"/>
-            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreateExerciseActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CustomDarkButton()"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lblAddCategory">
           <Properties>
@@ -487,11 +489,13 @@
             </Property>
             <Property name="text" type="java.lang.String" value="DELETE EXERCISE"/>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteExerciseActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CustomDarkButton()"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="btnUpdateExercise">
           <Properties>
@@ -500,11 +504,13 @@
             </Property>
             <Property name="text" type="java.lang.String" value="UPDATE EXERCISE"/>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpdateExerciseActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CustomDarkButton()"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JToggleButton" name="tbtnEditing">
           <Properties>
@@ -512,11 +518,13 @@
               <Font name="Segoe UI" size="18" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ENABLE EDITING"/>
-            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tbtnEditingStateChanged"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CustomDarkToggleButton()"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

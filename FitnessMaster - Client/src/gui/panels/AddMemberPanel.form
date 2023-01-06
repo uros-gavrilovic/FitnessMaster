@@ -256,6 +256,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveMemberActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CustomDarkButton()"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="lblBirthdate">
       <Properties>

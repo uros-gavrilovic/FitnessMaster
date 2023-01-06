@@ -2,8 +2,7 @@ package gui;
 
 import communication.*;
 import domain.Trainer;
-import gui.lib.ImageResizer;
-import gui.lib.Painter;
+import gui.lib.*;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import communication.Receiver;
@@ -98,20 +97,8 @@ public class LogInForm extends javax.swing.JDialog {
                }
           });
 
-          btnLogin.setBackground(new java.awt.Color(41, 42, 43));
           btnLogin.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
-          btnLogin.setForeground(new java.awt.Color(238, 238, 238));
           btnLogin.setText("SIGN IN");
-          btnLogin.setBorder(javax.swing.BorderFactory.createLineBorder(Painter.LIGHT, 3));
-          btnLogin.setFocusable(false);
-          btnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-               public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    btnLoginMouseEntered(evt);
-               }
-               public void mouseExited(java.awt.event.MouseEvent evt) {
-                    btnLoginMouseExited(evt);
-               }
-          });
           btnLogin.addActionListener(new java.awt.event.ActionListener() {
                public void actionPerformed(java.awt.event.ActionEvent evt) {
                     btnLoginActionPerformed(evt);
@@ -206,12 +193,6 @@ public class LogInForm extends javax.swing.JDialog {
                 System.out.println("ERROR: Failed to receive response.");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
-    private void btnLoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseEntered
-        Painter.setOnHoverColor((JButton) evt.getSource());
-    }//GEN-LAST:event_btnLoginMouseEntered
-    private void btnLoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLoginMouseExited
-        Painter.setOffHoverColor((JButton) evt.getSource());
-    }//GEN-LAST:event_btnLoginMouseExited
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         disconnect();
     }//GEN-LAST:event_formWindowClosing

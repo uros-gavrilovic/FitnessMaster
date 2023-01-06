@@ -24,7 +24,7 @@
                       <EmptySpace min="0" pref="410" max="32767" attributes="0"/>
                       <Component id="btnDetails" min="-2" pref="388" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="btnDetails1" min="-2" pref="388" max="-2" attributes="0"/>
+                      <Component id="btnRemoveMember" min="-2" pref="388" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -65,7 +65,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnDetails" alignment="3" pref="38" max="32767" attributes="0"/>
-                  <Component id="btnDetails1" alignment="3" pref="38" max="32767" attributes="0"/>
+                  <Component id="btnRemoveMember" alignment="3" pref="38" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -140,11 +140,17 @@
           <Font name="Segoe UI" size="18" style="1"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new ImageResizer().resize(new javax.swing.ImageIcon(getClass().getResource(&quot;/gui/lib/img/details.png&quot;)),40, 40)" type="code"/>
+          <Connection code="new ImageResizer().resize(new javax.swing.ImageIcon(getClass().getResource(&quot;/gui/lib/img/details_light.png&quot;)),40, 40)" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="MORE DETAILS"/>
-        <Property name="focusable" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDetailsMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDetailsMouseExited"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CustomDarkButton()"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
@@ -162,17 +168,23 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JButton" name="btnDetails1">
+    <Component class="javax.swing.JButton" name="btnRemoveMember">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI" size="18" style="1"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new ImageResizer().resize(new javax.swing.ImageIcon(getClass().getResource(&quot;/gui/lib/img/delete_member.png&quot;)),40, 40)" type="code"/>
+          <Connection code="new ImageResizer().resize(new javax.swing.ImageIcon(getClass().getResource(&quot;/gui/lib/img/delete_member_light.png&quot;)),40, 40)" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="REMOVE MEMBER"/>
-        <Property name="focusable" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRemoveMemberMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnRemoveMemberMouseExited"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new CustomDarkButton()"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
