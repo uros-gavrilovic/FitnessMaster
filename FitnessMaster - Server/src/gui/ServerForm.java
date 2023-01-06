@@ -6,19 +6,27 @@ import javax.swing.JPanel;
 import gui.panels.*;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.plaf.metal.MetalButtonUI;
+import lib.CustomConsoleStream;
 import server.Server;
 
 public class ServerForm extends javax.swing.JFrame {
      Server server;
      
      public ServerForm() {
-          server = new Server();
+          try {
+               CustomConsoleStream ccs = new CustomConsoleStream();
+          } catch (IOException ex) {
+               Logger.getLogger(ServerForm.class.getName()).log(Level.SEVERE, null, ex);
+          }
           
           initComponents();
           prepareForm();

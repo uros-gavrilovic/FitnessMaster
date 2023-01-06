@@ -38,7 +38,7 @@ public class LogInForm extends javax.swing.JDialog {
           lblPassword = new javax.swing.JLabel();
           txtUsername = new javax.swing.JTextField();
           txtPassword = new javax.swing.JPasswordField();
-          btnLogin = new javax.swing.JButton();
+          btnLogin = new CustomLightButton();
 
           lblUsername1.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
           lblUsername1.setText("KORISNIČKO IME:");

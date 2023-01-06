@@ -148,4 +148,23 @@ public class ClientHandler extends Thread {
             }
         }
     }
+
+     public Socket getSocket() {
+          return socket;
+     }
+     public void setSocket(Socket socket) {
+          this.socket = socket;
+     }
+     public Request getRequest() {
+          return request;
+     }
+     public void setRequest(Request request) {
+          this.request = request;
+     }
+     public Response getResponse() {
+          return response;
+     }
+     public void setResponse(Response response) {
+          this.response = response;
+     }
 }

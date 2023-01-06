@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JTextArea;
 
+@Deprecated
 public class JTextAreaPrintStream extends PrintStream {
      JTextArea area;
      

@@ -1,6 +1,7 @@
 package gui.panels;
 
 import gui.lib.Painter;
+import java.awt.Component;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,6 +30,8 @@ public class SettingsPanel extends javax.swing.JPanel {
 
           initComponents();
           prepareForm();
+          
+          if(server != null) disableComponents();
      }
 
      @SuppressWarnings("unchecked")
@@ -366,5 +369,10 @@ public class SettingsPanel extends javax.swing.JPanel {
           txtUrl.setText(url);
           txtUsername.setText(username);
           txtPassword.setText(password);
+     }
+
+     private void disableComponents() {
+          // TODO
+          for (Component c : this.getComponents()) c.setEnabled(false);
      }
 }

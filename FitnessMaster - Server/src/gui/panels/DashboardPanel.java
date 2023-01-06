@@ -4,19 +4,21 @@ import gui.lib.*;
 import java.awt.Color;
 import server.Server;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
-import lib.PrintStream;
+import javax.swing.SwingConstants;
+import lib.CustomConsoleStream;
 
 public class DashboardPanel extends javax.swing.JPanel {
      Server server;
      
-     public DashboardPanel(Server server) {
+     public DashboardPanel(Server server) {          
           this.server = server;
           
           initComponents();
           prepareForm();
-          
-          PrintStream ps = new PrintStream(txtLogs);
      }
 
      @SuppressWarnings("unchecked")
@@ -34,10 +36,12 @@ public class DashboardPanel extends javax.swing.JPanel {
           lblLogs.setText("CONSOLE LOGS:");
 
           txtStatus.setEditable(false);
+          txtStatus.setBackground(new java.awt.Color(153, 0, 0));
           txtStatus.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+          txtStatus.setForeground(new java.awt.Color(255, 255, 255));
           txtStatus.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-          txtStatus.setText("<status>");
-          txtStatus.setBorder(null);
+          txtStatus.setText("INACTIVE");
+          txtStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
           txtLogs.setEditable(false);
           txtLogs.setColumns(20);
@@ -51,7 +55,7 @@ public class DashboardPanel extends javax.swing.JPanel {
           btnStatus.setBackground(Painter.DARK);
           btnStatus.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
           btnStatus.setForeground(new java.awt.Color(255, 255, 255));
-          btnStatus.setText("<status>");
+          btnStatus.setText("ACTIVATE");
           btnStatus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
           btnStatus.setFocusable(false);
           btnStatus.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -105,10 +109,11 @@ public class DashboardPanel extends javax.swing.JPanel {
 
      private void btnStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStatusActionPerformed
           try{
-               if (server.isAlive()) {
-                    server.stopServer();
+               if(server == null) server = new Server();
+               if(!server.isAlive()){
+                    server.start();
                } else {
-                    server.startServer();
+                    server.stopServer();
                }
                prepareForm();
           } catch (Exception ex){
@@ -134,14 +139,17 @@ public class DashboardPanel extends javax.swing.JPanel {
      // End of variables declaration//GEN-END:variables
 
      private void prepareForm() {
-          if(server.isAlive()){
-               txtStatus.setText("ACTIVE");
-               txtStatus.setForeground(new Color(21,71,52));
+          if(server != null && server.isAlive()){
                btnStatus.setText("DEACTIVATE");
+               txtStatus.setText("ACTIVE");
+               txtStatus.setBackground(new Color(0, 102, 0));
           } else {
-               txtStatus.setText("INACTIVE");
-               txtStatus.setForeground(new Color(128,5,0));
+               if(server == null) System.err.println("Server je null");
+               
                btnStatus.setText("ACTIVATE");
+               txtStatus.setText("INACTIVE");
+               txtStatus.setBackground(new Color(153, 0, 0));
           }
+          txtLogs.setText(CustomConsoleStream.readConsoleFile());
      }
 }
