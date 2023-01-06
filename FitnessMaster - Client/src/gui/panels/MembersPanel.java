@@ -1,22 +1,14 @@
 package gui.panels;
 
-import communication.Operation;
-import communication.Receiver;
-import communication.Request;
-import communication.Response;
-import communication.ResponseType;
-import communication.Sender;
+import communication.*;
 import domain.Member;
 import domain.Trainer;
+import gui.DetailsUserDialog;
 import gui.models.MemberTableModel;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import gui.lib.*;
-import java.lang.reflect.Array;
-import java.util.regex.Pattern;
 
 public class MembersPanel extends javax.swing.JPanel {
     Trainer user;
@@ -87,6 +79,11 @@ public class MembersPanel extends javax.swing.JPanel {
                }
                public void mouseExited(java.awt.event.MouseEvent evt) {
                     btnDetailsMouseExited(evt);
+               }
+          });
+          btnDetails.addActionListener(new java.awt.event.ActionListener() {
+               public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnDetailsActionPerformed(evt);
                }
           });
 
@@ -183,6 +180,16 @@ public class MembersPanel extends javax.swing.JPanel {
           btnRemoveMember.setIcon(new ImageResizer().resize(new javax.swing.ImageIcon(getClass().getResource("/gui/lib/img/delete_member_light.png")), 40, 40));
      }//GEN-LAST:event_btnRemoveMemberMouseExited
 
+     private void btnDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsActionPerformed
+          if(table.getSelectedRow() != -1){
+               Member selectedMember = members.get(table.getSelectedRow());
+               
+               new DetailsUserDialog(null, true, selectedMember).setVisible(true);
+          } else {
+               JOptionPane.showMessageDialog(this, "Please choose member you wish to see more details about", "Choose members", JOptionPane.WARNING_MESSAGE);
+          }
+     }//GEN-LAST:event_btnDetailsActionPerformed
+
 
      // Variables declaration - do not modify//GEN-BEGIN:variables
      private javax.swing.JButton btnDetails;
@@ -211,8 +218,7 @@ public class MembersPanel extends javax.swing.JPanel {
                 table.setModel(new MemberTableModel(members));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error retreiving members list.\n"
-                                                                                                                + ex.getMessage(), "Retreiving members", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error retreiving members list.\n" + ex.getMessage(), "Retreiving members", JOptionPane.ERROR_MESSAGE);
         }
     }
     
