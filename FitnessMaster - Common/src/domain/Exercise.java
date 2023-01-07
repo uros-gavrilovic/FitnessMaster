@@ -110,7 +110,20 @@ public class Exercise implements Serializable, GenericEntity {
           return columnValues;
      }
      @Override
+     public ArrayList<String> getIdNames() {
+          ArrayList<String> idNames = new ArrayList<>();
+          idNames.add("exerciseID");
+          return idNames;
+     }
+     @Override
+     public ArrayList<Object> getIdValues() {
+          ArrayList<Object> idValues = new ArrayList<>();
+          idValues.add(exerciseID);
+          return idValues;
+     }
+     @Override
      public void setId(int id) {
           setExerciseID(id);
      }
+
 }

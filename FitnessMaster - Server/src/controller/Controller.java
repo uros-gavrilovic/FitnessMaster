@@ -5,7 +5,9 @@ import domain.Member;
 import domain.Trainer;
 import java.util.ArrayList;
 import operation.AbstractGenericOperation;
+import operation.exercise.DeleteExercise;
 import operation.exercise.InsertExercise;
+import operation.exercise.UpdateExercise;
 import repo.Repository;
 import repo.db.*;
 import repo.db.impl.DbRepositoryExercise;
@@ -83,15 +85,18 @@ public class Controller {
         }
     }
     public void deleteExercise(Exercise exercise) throws Exception {
-        ((DatabaseRepository) repoExercise).connect();
-        try {
-            repoExercise.delete(exercise);
-            ((DatabaseRepository) repoExercise).commit();
-        } catch (Exception ex) {
-            ((DatabaseRepository) repoExercise).rollback();
-        } finally {
-            ((DatabaseRepository) repoExercise).disconnect();
-        }
+//        ((DatabaseRepository) repoExercise).connect();
+//        try {
+//            repoExercise.delete(exercise);
+//            ((DatabaseRepository) repoExercise).commit();
+//        } catch (Exception ex) {
+//            ((DatabaseRepository) repoExercise).rollback();
+//        } finally {
+//            ((DatabaseRepository) repoExercise).disconnect();
+//        }
+
+         AbstractGenericOperation operation = new DeleteExercise();
+         operation.execute(exercise);
     }
     
     public void updateMember(Member member) throws Exception {
@@ -106,15 +111,18 @@ public class Controller {
         }
     }
     public void updateExercise(Exercise exercise) throws Exception {
-        ((DatabaseRepository) repoExercise).connect();
-        try {
-            repoExercise.update(exercise);
-            ((DatabaseRepository) repoExercise).commit();
-        } catch (Exception ex) {
-            ((DatabaseRepository) repoExercise).rollback();
-        } finally {
-            ((DatabaseRepository) repoExercise).disconnect();
-        }
+//        ((DatabaseRepository) repoExercise).connect();
+//        try {
+//            repoExercise.update(exercise);
+//            ((DatabaseRepository) repoExercise).commit();
+//        } catch (Exception ex) {
+//            ((DatabaseRepository) repoExercise).rollback();
+//        } finally {
+//            ((DatabaseRepository) repoExercise).disconnect();
+//        }
+
+         AbstractGenericOperation operation = new UpdateExercise();
+         operation.execute(exercise);
     }
     
     public ArrayList<Member> getMembers() throws Exception {

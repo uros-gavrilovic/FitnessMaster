@@ -2,13 +2,13 @@ package operation;
 
 import repo.Repository;
 import repo.db.DatabaseRepository;
-import repo.db.impl.RepositoryDBGeneric;
+import repo.db.impl.DbRepositoryGeneric;
 
 public abstract class AbstractGenericOperation {
      protected final Repository repository;
 
      public AbstractGenericOperation() {
-          this.repository = new RepositoryDBGeneric();
+          this.repository = new DbRepositoryGeneric();
      }
 
      protected abstract void preconditions(Object param) throws Exception;

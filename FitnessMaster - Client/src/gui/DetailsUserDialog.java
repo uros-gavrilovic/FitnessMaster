@@ -279,17 +279,17 @@ public class DetailsUserDialog extends javax.swing.JDialog {
           txtBirthdate.setText(member.getDateOfBirth().toString());
           txtPhone.setText(member.getPhoneNumber());
           
-          try {
-               Request request = new Request(Operation.GET_MEMBERSHIPS, null);
-               new Sender(socket).send(request);
-
-               Response response = (Response) new Receiver(socket).receive();
-               if (response.getResponseType().equals(ResponseType.SUCCESS)) {
-                    members = (ArrayList<Member>) response.getResult();
-                    table.setModel(new MemberTableModel(members));
-               }
-          } catch (Exception ex) {
-               JOptionPane.showMessageDialog(this, "Error retreiving members list.\n" + ex.getMessage(), "Retreiving members", JOptionPane.ERROR_MESSAGE);
-          }
+//          try {
+//               Request request = new Request(Operation.GET_MEMBERSHIPS, null);
+//               new Sender(socket).send(request);
+//
+//               Response response = (Response) new Receiver(socket).receive();
+//               if (response.getResponseType().equals(ResponseType.SUCCESS)) {
+//                    members = (ArrayList<Member>) response.getResult();
+//                    table.setModel(new MemberTableModel(members));
+//               }
+//          } catch (Exception ex) {
+//               JOptionPane.showMessageDialog(this, "Error retreiving members list.\n" + ex.getMessage(), "Retreiving members", JOptionPane.ERROR_MESSAGE);
+//          }
      }
 }

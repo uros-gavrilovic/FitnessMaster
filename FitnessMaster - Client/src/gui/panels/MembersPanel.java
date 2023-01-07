@@ -3,12 +3,17 @@ package gui.panels;
 import communication.*;
 import domain.Member;
 import domain.Trainer;
+import gui.AppForm;
 import gui.DetailsUserDialog;
 import gui.models.MemberTableModel;
 import java.net.Socket;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import gui.lib.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 public class MembersPanel extends javax.swing.JPanel {
     Trainer user;
@@ -183,10 +188,10 @@ public class MembersPanel extends javax.swing.JPanel {
      private void btnDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsActionPerformed
           if(table.getSelectedRow() != -1){
                Member selectedMember = members.get(table.getSelectedRow());
+              new DetailsUserDialog(null, true, selectedMember, socket).setVisible(true);
                
-               new DetailsUserDialog(null, true, selectedMember).setVisible(true);
           } else {
-               JOptionPane.showMessageDialog(this, "Please choose member you wish to see more details about", "Choose members", JOptionPane.WARNING_MESSAGE);
+               JOptionPane.showMessageDialog(this, "Please choose member you wish to see more details about", "Choose member", JOptionPane.WARNING_MESSAGE);
           }
      }//GEN-LAST:event_btnDetailsActionPerformed
 

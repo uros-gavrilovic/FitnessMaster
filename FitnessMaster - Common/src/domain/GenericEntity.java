@@ -11,8 +11,12 @@ public interface GenericEntity extends Serializable{
      String getTableName();
      ArrayList<String>getColumnNames();
      ArrayList<Object> getColumnValues();
+     ArrayList<String> getIdNames();
+     ArrayList<Object> getIdValues();
      
-     default String getColumnNamesForInsert(){
+     default String getInsertColumnNames(){
+          // Used for SQL queries to concatenate string into format:
+          // columnAName, columnBName, columnCName
           StringBuilder sb = new StringBuilder();
           ArrayList<String> columnNames = getColumnNames();
           
@@ -28,7 +32,10 @@ public interface GenericEntity extends Serializable{
           
           return sb.toString();
      }
-     default String getColumnValuesForInsert(){
+     default String getInsertColumnValues(){
+          // Used for SQL queries to concatenate string into format:
+          // columnAValue, columnBValue, columnCValue
+          
           StringBuilder sb = new StringBuilder();
           ArrayList<Object> columnValues = getColumnValues();
           
@@ -40,7 +47,6 @@ public interface GenericEntity extends Serializable{
                if(columnValue instanceof String || columnValue.getClass().isEnum()) {
                     stringValue = "\"" + stringValue+ "\"";
                }
-               
                if(it.hasNext()){
                     sb.append(stringValue + ", ");
                } else {
@@ -50,6 +56,59 @@ public interface GenericEntity extends Serializable{
           
           return sb.toString();
      }
+     
+     default String getUpdateSet(){
+          ArrayList<String> columnNames = getColumnNames();
+          ArrayList<Object> columnValues = getColumnValues();
+          StringBuilder sb = new StringBuilder();
+          
+          Iterator<String> itNames = columnNames.iterator();
+          Iterator<Object> itValues = columnValues.iterator();
+          
+          while(itNames.hasNext()){
+               String columnName = itNames.next();
+               
+               Object columnValue = itValues.next();
+               String stringValue = columnValue.toString();
+               if (columnValue instanceof String || columnValue.getClass().isEnum()) {
+                    stringValue = "\"" + stringValue + "\"";
+               }
+
+               if(itNames.hasNext()){
+                    sb.append(String.format("%s = %s, ", columnName, stringValue));
+               } else {
+                    sb.append(String.format("%s = %s", columnName, stringValue));
+               }
+          }
+          
+          return sb.toString();
+     }
+     default String getUpdateWhere(){
+          ArrayList<String> columnNames = getIdNames();
+          ArrayList<Object> columnValues = getIdValues();
+          StringBuilder sb = new StringBuilder();
+          
+          Iterator<String> itNames = columnNames.iterator();
+          Iterator<Object> itValues = columnValues.iterator();
+          
+          while(itNames.hasNext()){
+               String columnName = itNames.next();
+               
+               Object columnValue = itValues.next();
+               String stringValue = columnValue.toString();
+               if (columnValue instanceof String || columnValue.getClass().isEnum()) {
+                    stringValue = "\"" + stringValue + "\"";
+               }
+
+               if(itNames.hasNext()){
+                    sb.append(String.format("%s = %s AND ", columnName, stringValue));
+               } else {
+                    sb.append(String.format("%s = %s", columnName, stringValue));
+               }
+          }
+          
+          return sb.toString();
+     } // naci bolji naziv
      
      void setId(int id);
 }
