@@ -83,7 +83,8 @@ public class DbRepositoryTrainer implements DatabaseRepository<Trainer>{
     }
     
     @Override
-    public Trainer find(int id) throws Exception {        
+    public Trainer find(Trainer trainer) throws Exception { 
+         int id = trainer.getTrainerID();
         try {
             String query = "SELECT * "
                                     + "FROM Trainer "
@@ -95,16 +96,16 @@ public class DbRepositoryTrainer implements DatabaseRepository<Trainer>{
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Trainer trainer = new Trainer();
-                trainer.setTrainerID(rs.getInt("trainerID"));
-                trainer.setFirstName(rs.getString("firstName"));
-                trainer.setLastName(rs.getString("lastName"));
-                trainer.setHireDate(rs.getDate("hireDate").toLocalDate());
-                trainer.setUsername(rs.getString("username"));
-                trainer.setPassword(rs.getString("password"));
+                Trainer t = new Trainer();
+                t.setTrainerID(rs.getInt("trainerID"));
+                t.setFirstName(rs.getString("firstName"));
+                t.setLastName(rs.getString("lastName"));
+                t.setHireDate(rs.getDate("hireDate").toLocalDate());
+                t.setUsername(rs.getString("username"));
+                t.setPassword(rs.getString("password"));
                 
-                System.out.println("Succesfully found trainer [" + trainer + "].");
-                return trainer;
+                System.out.println("Succesfully found trainer [" + t + "].");
+                return t;
             }
 
             ps.close();

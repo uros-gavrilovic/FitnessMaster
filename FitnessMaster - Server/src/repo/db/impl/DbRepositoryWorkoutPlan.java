@@ -1,6 +1,8 @@
 package repo.db.impl;
 
 import domain.Exercise;
+import domain.Member;
+import domain.Trainer;
 import repo.*;
 import  domain.WorkoutPlan;
 import java.sql.Connection;
@@ -80,11 +82,12 @@ public class DbRepositoryWorkoutPlan implements DatabaseRepository<WorkoutPlan>{
     }
 
     @Override
-    public WorkoutPlan find(int id) throws Exception {
+    public WorkoutPlan find(WorkoutPlan plan) throws Exception {
+         int id = plan.getWorkoutPlanID();
         try {
             String query = "SELECT * "
-                                    + "FROM WorkoutPlan "
-                                    + "WHERE workoutPlanID = ?";
+                                + "FROM WorkoutPlan "
+                                + "WHERE workoutPlanID = ?";
             Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
             PreparedStatement ps = connection.prepareStatement(query);
@@ -92,14 +95,14 @@ public class DbRepositoryWorkoutPlan implements DatabaseRepository<WorkoutPlan>{
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                WorkoutPlan plan = new WorkoutPlan();
-                plan.setWorkoutPlanID(rs.getInt("workoutPlanID"));
-                plan.setDate(rs.getDate("date").toLocalDate());
-                plan.setMember(new DbRepositoryMember().find(rs.getInt("memberID")));
-                plan.setTrainer(new DbRepositoryTrainer().find(rs.getInt("trainerID")));
+                WorkoutPlan p = new WorkoutPlan();
+                p.setWorkoutPlanID(rs.getInt("workoutPlanID"));
+                p.setDate(rs.getDate("date").toLocalDate());
+                p.setMember(new DbRepositoryMember().find(new Member(rs.getInt("memberID"))));
+                p.setTrainer(new DbRepositoryTrainer().find(new Trainer(rs.getInt("trainerID"))));
 
-                System.out.println("Succesfully found workout plan [" + plan + "].");
-                return plan;
+                System.out.println("Succesfully found workout plan [" + p + "].");
+                return p;
             }
 
             ps.close();
@@ -127,8 +130,8 @@ public class DbRepositoryWorkoutPlan implements DatabaseRepository<WorkoutPlan>{
                 WorkoutPlan plan = new WorkoutPlan();
                 plan.setWorkoutPlanID(rs.getInt("workoutPlanID"));
                 plan.setDate(rs.getDate("date").toLocalDate());
-                plan.setMember(new DbRepositoryMember().find(rs.getInt("memberID")));
-                plan.setTrainer(new DbRepositoryTrainer().find(rs.getInt("trainerID")));
+                plan.setMember(new DbRepositoryMember().find(new Member(rs.getInt("memberID"))));
+                plan.setTrainer(new DbRepositoryTrainer().find(new Trainer(rs.getInt("trainerID"))));
 
                 plans.add(plan);
             }

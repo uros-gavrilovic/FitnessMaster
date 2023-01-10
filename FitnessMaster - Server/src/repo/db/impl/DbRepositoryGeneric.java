@@ -1,6 +1,5 @@
 package repo.db.impl;
 
-import com.mysql.cj.xdevapi.DbDoc;
 import domain.GenericEntity;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -73,33 +72,47 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
           }
      }
      @Override
-     public GenericEntity find(int id) throws Exception {
-//          try {
-//               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
-//
-//               String query = "SELECT *" + entity.getTableName()
-//                       + " FROM " + entity.get()
-//                       + " WHERE " + entity.getUpdateWhere();
-//
-//               PreparedStatement ps = connection.prepareStatement(query);
-//               ps.executeUpdate(query, PreparedStatement.RETURN_GENERATED_KEYS);
-//
-//               ResultSet rsKey = ps.getGeneratedKeys();
-//               if (rsKey.next()) {
-//                    int id = rsKey.getInt(1);
-//
-//                    entity.setId(id);
-//               }
-//               ps.close();
-//               rsKey.close();
-//          } catch (SQLException ex) {
-//               throw ex;
-//          }
+     public GenericEntity find(GenericEntity entity) throws Exception {
+          try {
+               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
-          throw new UnsupportedOperationException();
-     } // TODO
+               String query = "SELECT *" 
+                                   + " FROM " + entity.getTableName()
+                                   + " WHERE " + entity.getUpdateWhere();
+
+               PreparedStatement ps = connection.prepareStatement(query);
+               ResultSet rs = ps.executeQuery();
+               
+               while(rs.next()){
+                   // if(entity instanceof Exercise) return new Exercise(rs.getString("naziv itd"), Category.OTHER, BodyPart.CORE)
+                    
+               }                  
+                
+               
+          } catch (SQLException ex) {
+               throw ex;
+          }
+     }
      @Override
      public ArrayList<GenericEntity> getAll() {
-          throw new UnsupportedOperationException();
+          GenericEntity ge;
+          ArrayList<GenericEntity> result = new ArrayList<>();
+          try {
+               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
+
+               String query = "SELECT *" 
+                                   + " FROM " + ge.getTableName();
+
+               PreparedStatement ps = connection.prepareStatement(query);
+               ResultSet rs = ps.executeQuery();
+               
+               while(rs.next()){
+                    result.add(ge)
+               }                  
+                
+               
+          } catch (SQLException ex) {
+               throw ex;
+          }
      }  // TODO
 }

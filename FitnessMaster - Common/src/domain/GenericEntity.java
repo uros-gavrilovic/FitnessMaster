@@ -108,7 +108,7 @@ public interface GenericEntity extends Serializable{
           }
           
           return sb.toString();
-     } // naci bolji naziv
-     
+     } // naci bolji naziv za metodu
+      
      void setId(int id);
 }

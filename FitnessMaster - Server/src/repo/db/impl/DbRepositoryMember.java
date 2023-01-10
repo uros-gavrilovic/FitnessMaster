@@ -77,39 +77,40 @@ public class DbRepositoryMember implements DatabaseRepository<Member>{
         }        
     }
     @Override
-    public Member find(int id) throws Exception {     
-        try{
-        String query = "SELECT * "
-                                + "FROM Member "
-                                + "WHERE memberID = ?";
-        Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
-        
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setInt(1, id);
-       
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){   
-            Member member = new Member();
-            member.setMemberID(rs.getInt("memberID"));
-            member.setFirstName(rs.getString("firstName"));
-            member.setLastName(rs.getString("lastName"));
-            member.setGender(Gender.valueOf(rs.getString("gender")));
-            member.setAddress(rs.getString("address"));
-            member.setPhoneNumber(rs.getString("phoneNumber"));
-            member.setDateOfBirth(rs.getDate("dateOfBirth").toLocalDate());
-            
-            System.out.println("Succesfully found member [" + member + "].");
-            return member;
-        }
-        
-        ps.close();
-        } catch (Exception e){
-            System.err.println("ERROR: " + e.getMessage());
-        }
-        
-        System.out.println("Member with ID [" + id + "] was not found.");
-        return null;
-    }
+     public Member find(Member member) throws Exception {
+          int id = member.getMemberID();
+          try {
+               String query = "SELECT * "
+                       + "FROM Member "
+                       + "WHERE memberID = ?";
+               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
+
+               PreparedStatement ps = connection.prepareStatement(query);
+               ps.setInt(1, id);
+
+               ResultSet rs = ps.executeQuery();
+               while (rs.next()) {
+                    Member m = new Member();
+                    m.setMemberID(rs.getInt("memberID"));
+                    m.setFirstName(rs.getString("firstName"));
+                    m.setLastName(rs.getString("lastName"));
+                    m.setGender(Gender.valueOf(rs.getString("gender")));
+                    m.setAddress(rs.getString("address"));
+                    m.setPhoneNumber(rs.getString("phoneNumber"));
+                    m.setDateOfBirth(rs.getDate("dateOfBirth").toLocalDate());
+
+                    System.out.println("Succesfully found member [" + m + "].");
+                    return m;
+               }
+
+               ps.close();
+          } catch (Exception e) {
+               System.err.println("ERROR: " + e.getMessage());
+          }
+
+          System.out.println("Member with ID [" + id + "] was not found.");
+          return null;
+     }
     @Override
     public ArrayList<Member> getAll() {
         ArrayList<Member> members = new ArrayList<>();

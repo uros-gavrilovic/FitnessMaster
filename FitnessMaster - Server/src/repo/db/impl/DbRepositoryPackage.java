@@ -78,11 +78,12 @@ public class DbRepositoryPackage implements DatabaseRepository<Package>{
     }
     
     @Override
-    public Package find(int id) throws Exception {
+    public Package find(Package membershipPackage) throws Exception {
+         int id = membershipPackage.getPackageID();
         try{
         String query = "SELECT * "
-                                + "FROM Package "
-                                + "WHERE packageID = ?";
+                             + "FROM Package "
+                             + "WHERE packageID = ?";
         Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
         
         PreparedStatement ps = connection.prepareStatement(query);
@@ -90,13 +91,13 @@ public class DbRepositoryPackage implements DatabaseRepository<Package>{
        
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
-            Package membershipPackage = new Package();
-            membershipPackage.setPackageID(rs.getInt("packageID"));
-            membershipPackage.setName(rs.getString("name"));
-            membershipPackage.setPrice(rs.getDouble("price"));
+            Package mp = new Package();
+            mp.setPackageID(rs.getInt("packageID"));
+            mp.setName(rs.getString("name"));
+            mp.setPrice(rs.getDouble("price"));
             
-            System.out.println("Succesfully found package [" + membershipPackage + "].");
-            return membershipPackage;
+            System.out.println("Succesfully found package [" + mp + "].");
+            return mp;
         }
         
         ps.close();

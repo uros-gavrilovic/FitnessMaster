@@ -1,6 +1,7 @@
 package repo.db.impl;
 
 import domain.Exercise;
+import domain.Member;
 import domain.Membership;
 import java.sql.Connection;
 import java.sql.Date;
@@ -83,18 +84,18 @@ public class DbRepositoryMembership implements DatabaseRepository<Membership>{
     }
     
     @Override
-    public Membership find(int id) throws Exception {
+    public Membership find(Membership membership) throws Exception {
         // TODO: Implement function.
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
+   
     @Override
     public ArrayList<Membership> getAll() {
         ArrayList<Membership> memberships = new ArrayList<>();
 
         try {
             String query = "SELECT * "
-                                    + "FROM Membership ";
+                                + "FROM Membership ";
             Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
             PreparedStatement ps = connection.prepareStatement(query);
@@ -102,8 +103,8 @@ public class DbRepositoryMembership implements DatabaseRepository<Membership>{
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Membership membership = new Membership();
-                membership.setMember(new DbRepositoryMember().find(rs.getInt("memberID"))); 
-                membership.setMembershipPackage(new DbRepositoryPackage().find(rs.getInt("packageID")));
+                membership.setMember(new DbRepositoryMember().find(new Member(rs.getInt("memberID"))));
+                membership.setMembershipPackage(new DbRepositoryPackage().find(new domain.Package(rs.getInt("packageID"))));
                 membership.setStartDate(rs.getDate("startDate").toLocalDate());
                 membership.setEndDate(rs.getDate("endDate").toLocalDate());
                 

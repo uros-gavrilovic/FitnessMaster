@@ -2,6 +2,7 @@ package repo.db.impl;
 
 import domain.Exercise;
 import domain.WorkoutActivity;
+import domain.WorkoutPlan;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,7 +84,7 @@ public class DbRepositoryWorkoutActivity implements DatabaseRepository<WorkoutAc
     }
     
     @Override
-    public WorkoutActivity find(int id) throws Exception {
+    public WorkoutActivity find(WorkoutActivity activity) throws Exception {
         // TODO: Implement function.
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -102,11 +103,11 @@ public class DbRepositoryWorkoutActivity implements DatabaseRepository<WorkoutAc
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 WorkoutActivity activity = new WorkoutActivity();
-                activity.setWorkoutPlan(new DbRepositoryWorkoutPlan().find(rs.getInt("workoutPlanID")));
+                activity.setWorkoutPlan(new DbRepositoryWorkoutPlan().find(new WorkoutPlan(rs.getInt("workoutPlanID"))));
                 activity.setOrdinalNumber(rs.getInt("ordinalNumber"));
                 activity.setSets(rs.getInt("sets"));
                 activity.setReps(rs.getInt("reps"));
-                activity.setExercise(new DbRepositoryExercise().find(rs.getInt("exerciseID")));
+                activity.setExercise(new DbRepositoryExercise().find(new Exercise(rs.getInt("exerciseID"))));
 
                 activities.add(activity);
             }

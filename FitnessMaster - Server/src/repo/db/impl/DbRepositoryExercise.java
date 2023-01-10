@@ -31,6 +31,7 @@ public class DbRepositoryExercise implements DatabaseRepository<Exercise> {
             System.err.println("ERROR: " + e.getMessage());
         }
     }
+   
     @Override
     public void update(Exercise exercise) throws Exception {
         try {
@@ -56,6 +57,7 @@ public class DbRepositoryExercise implements DatabaseRepository<Exercise> {
             System.err.println("ERROR: " + e.getMessage());
         }
     }
+    
     @Override
     public void delete(Exercise exercise) throws Exception {
         try {
@@ -76,65 +78,68 @@ public class DbRepositoryExercise implements DatabaseRepository<Exercise> {
             System.err.println("ERROR: " + e.getMessage());
         }
     }
+     
     @Override
-    public Exercise find(int id) throws Exception {
-        try {
-            String query = "SELECT * "
-                                    + "FROM Exercise "
-                                    + "WHERE exerciseID = ?";
-            Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
+     public Exercise find(Exercise exercise) throws Exception {
+          int id = exercise.getExerciseID();
+          try {
+               String query = "SELECT * "
+                       + "FROM Exercise "
+                       + "WHERE exerciseID = ?";
+               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, id);
+               PreparedStatement ps = connection.prepareStatement(query);
+               ps.setInt(1, id);
 
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Exercise exercise = new Exercise();
-                exercise.setExerciseID(rs.getInt("exerciseID"));
-                exercise.setName(rs.getString("name"));
-                exercise.setBodyPart(BodyPart.valueOf(rs.getString("bodyPart")));
-                exercise.setCategory(Category.valueOf(rs.getString("bodyPart")));
+               ResultSet rs = ps.executeQuery();
+               while (rs.next()) {
+                    Exercise e = new Exercise();
+                    e.setExerciseID(rs.getInt("exerciseID"));
+                    e.setName(rs.getString("name"));
+                    e.setBodyPart(BodyPart.valueOf(rs.getString("bodyPart")));
+                    e.setCategory(Category.valueOf(rs.getString("bodyPart")));
 
-                System.out.println("Succesfully found exercise [" + exercise + "].");
-                return exercise;
-            }
+                    System.out.println("Succesfully found exercise [" + e + "].");
+                    return e;
+               }
 
-            ps.close();
-        } catch (Exception e) {
-            System.err.println("ERROR: " + e.getMessage());
-        }
+               ps.close();
+          } catch (Exception e) {
+               System.err.println("ERROR: " + e.getMessage());
+          }
 
-        System.out.println("Exercise with ID [" + id + "] was not found.");
-        return null;
-    }
-    @Override
-    public ArrayList<Exercise> getAll() {
-        ArrayList<Exercise> exercises = new ArrayList<>();
+          System.out.println("Exercise with ID [" + id + "] was not found.");
+          return null;
+     }
+    
+     @Override
+     public ArrayList<Exercise> getAll() {
+          ArrayList<Exercise> exercises = new ArrayList<>();
 
-        try {
-            String query = "SELECT * "
-                                    + "FROM Exercise ";
-            Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
+          try {
+               String query = "SELECT * "
+                       + "FROM Exercise ";
+               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
-            PreparedStatement ps = connection.prepareStatement(query);
+               PreparedStatement ps = connection.prepareStatement(query);
 
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Exercise exercise = new Exercise();
-                exercise.setExerciseID(rs.getInt("exerciseID"));
-                exercise.setName(rs.getString("name"));
-                exercise.setBodyPart(BodyPart.valueOf(rs.getString("bodyPart")));
-                exercise.setCategory(Category.valueOf(rs.getString("category")));
+               ResultSet rs = ps.executeQuery();
+               while (rs.next()) {
+                    Exercise exercise = new Exercise();
+                    exercise.setExerciseID(rs.getInt("exerciseID"));
+                    exercise.setName(rs.getString("name"));
+                    exercise.setBodyPart(BodyPart.valueOf(rs.getString("bodyPart")));
+                    exercise.setCategory(Category.valueOf(rs.getString("category")));
 
-                exercises.add(exercise);
-            }
+                    exercises.add(exercise);
+               }
 
-            ps.close();
-        } catch (Exception e) {
-            System.err.println("ERROR: " + e.getMessage());
-        }
+               ps.close();
+          } catch (Exception e) {
+               System.err.println("ERROR: " + e.getMessage());
+          }
 
-        System.out.println("Retrieved " + exercises.size() + " row(s).");
-        return exercises;
-    }
+          System.out.println("Retrieved " + exercises.size() + " row(s).");
+          return exercises;
+     }
 }

@@ -7,6 +7,8 @@ public interface Repository<T> {
     void insert(T param) throws Exception;
     void update(T param) throws Exception;
     void delete(T param) throws Exception;
-    T find(int id) throws Exception;
+//    T find(int id) throws Exception;
+//    ArrayList<T> getAll();
+    T find(T param) throws Exception;
     ArrayList<T> getAll();
 }
