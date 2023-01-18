@@ -16,7 +16,7 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
                String query = "INSERT INTO " + entity.getTableName() + "(" + entity.getInsertColumnNames() + ")" +
-                                        " VALUES (" + entity.getInsertColumnValues()+ ")";
+                                         " VALUES (" + entity.getInsertColumnValues()+ ")";
                
                PreparedStatement ps = connection.prepareStatement(query);
                ps.executeUpdate(query, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -38,8 +38,8 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
                
                String query = "UPDATE " + entity.getTableName() +
-                                   " SET " + entity.getUpdateSet() +
-                                   " WHERE " + entity.getUpdateWhere();
+                                          " SET " + entity.getUpdateSet() +
+                                          " WHERE " + entity.getUpdateWhere();
                
                PreparedStatement ps = connection.prepareStatement(query);
                ps.executeUpdate(query, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -62,7 +62,7 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
                String query = "DELETE FROM " + entity.getTableName()
-                                   + " WHERE " + entity.getUpdateWhere();
+                                     + " WHERE " + entity.getUpdateWhere();
 
                PreparedStatement ps = connection.prepareStatement(query);
                ps.executeUpdate(query);
@@ -77,15 +77,15 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
                String query = "SELECT *" 
-                                   + " FROM " + entity.getTableName()
-                                   + " WHERE " + entity.getUpdateWhere();
+                                     + " FROM " + entity.getTableName()
+                                     + " WHERE " + entity.getUpdateWhere();
 
                PreparedStatement ps = connection.prepareStatement(query);
                ResultSet rs = ps.executeQuery();
                
                while(rs.next()){
                    // if(entity instanceof Exercise) return new Exercise(rs.getString("naziv itd"), Category.OTHER, BodyPart.CORE)
-                    
+                   
                }                  
                 
                
@@ -101,7 +101,7 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
                String query = "SELECT *" 
-                                   + " FROM " + ge.getTableName();
+                                      + " FROM " + ge.getTableName();
 
                PreparedStatement ps = connection.prepareStatement(query);
                ResultSet rs = ps.executeQuery();

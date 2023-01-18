@@ -1,11 +1,8 @@
 package domain;
 
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public interface GenericEntity extends Serializable{
      String getTableName();
@@ -17,6 +14,7 @@ public interface GenericEntity extends Serializable{
      default String getInsertColumnNames(){
           // Used for SQL queries to concatenate string into format:
           // columnAName, columnBName, columnCName
+          
           StringBuilder sb = new StringBuilder();
           ArrayList<String> columnNames = getColumnNames();
           
@@ -58,6 +56,9 @@ public interface GenericEntity extends Serializable{
      }
      
      default String getUpdateSet(){
+         // Used for SQL queries to concatenate string into format:
+         // columnAName = columnAValue, columnAName = columnBValue, columnAName = columnCValue
+         
           ArrayList<String> columnNames = getColumnNames();
           ArrayList<Object> columnValues = getColumnValues();
           StringBuilder sb = new StringBuilder();
@@ -84,6 +85,9 @@ public interface GenericEntity extends Serializable{
           return sb.toString();
      }
      default String getUpdateWhere(){
+         // Used for SQL queries to concatenate string into format:
+         // columnAName = columnAValue AND columnAName = columnBValue AND columnAName = columnCValue
+         
           ArrayList<String> columnNames = getIdNames();
           ArrayList<Object> columnValues = getIdValues();
           StringBuilder sb = new StringBuilder();

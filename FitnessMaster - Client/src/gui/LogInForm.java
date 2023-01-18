@@ -167,10 +167,10 @@ public class LogInForm extends javax.swing.JDialog {
            String password = String.valueOf(txtPassword.getPassword());
 
            Trainer trainer = new Trainer();
-//           trainer.setUsername(username);
-//           trainer.setPassword(password);
-           trainer.setUsername("admin");     // TESTING
-           trainer.setPassword("admin");     // TESTING
+           trainer.setUsername(username);
+           trainer.setPassword(password);
+//           trainer.setUsername("admin");     // TESTING
+//           trainer.setPassword("admin");     // TESTING
 
            
             Request request = new Request();
@@ -230,17 +230,17 @@ public class LogInForm extends javax.swing.JDialog {
         }
     }
     private boolean validateForm() {
-         return true;    // TESTING
+//         return true;    // TESTING
          
-//        String username = txtUsername.getText();
-//        String password = String.valueOf(txtPassword.getPassword());
-//        
-//        if(username.isBlank() || password.isBlank()){
-//            JOptionPane.showMessageDialog(this, "Please enter your username and password", "Login error", JOptionPane.INFORMATION_MESSAGE);
-//            return false;
-//        } else {
-//            return true;
-//        }
+        String username = txtUsername.getText();
+        String password = String.valueOf(txtPassword.getPassword());
+        
+        if(username.isBlank() || password.isBlank()){
+            JOptionPane.showMessageDialog(this, "Please enter your username and password", "Login error", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        } else {
+            return true;
+        }
     }
     
     private void openMainMenu() {

@@ -3,12 +3,7 @@ package gui.panels;
 import gui.lib.*;
 import java.awt.Color;
 import server.Server;
-import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
 import lib.CustomConsoleStream;
 
 public class DashboardPanel extends javax.swing.JPanel {
@@ -128,7 +123,6 @@ public class DashboardPanel extends javax.swing.JPanel {
           Painter.setOffHoverColor((JButton) evt.getSource());
      }//GEN-LAST:event_btnStatusMouseExited
 
-
      // Variables declaration - do not modify//GEN-BEGIN:variables
      private javax.swing.JButton btnStatus;
      private javax.swing.JScrollPane jScrollPane1;
@@ -140,11 +134,13 @@ public class DashboardPanel extends javax.swing.JPanel {
 
      private void prepareForm() {
           if(server != null && server.isAlive()){
+              System.err.println("A");
                btnStatus.setText("DEACTIVATE");
                txtStatus.setText("ACTIVE");
                txtStatus.setBackground(new Color(0, 102, 0));
           } else {
-               if(server == null) System.err.println("Server je null");
+                            System.err.println("B");
+//               if(server == null) System.err.println("Server je null");
                
                btnStatus.setText("ACTIVATE");
                txtStatus.setText("INACTIVE");
