@@ -5,7 +5,7 @@ import repo.db.DatabaseRepository;
 import repo.db.impl.DbRepositoryGeneric;
 
 public abstract class AbstractGenericOperation {
-     protected final Repository repository;
+     protected final DbRepositoryGeneric repository;
 
      public AbstractGenericOperation() {
           this.repository = new DbRepositoryGeneric();
