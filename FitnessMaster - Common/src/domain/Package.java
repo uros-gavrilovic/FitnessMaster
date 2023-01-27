@@ -2,6 +2,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -69,7 +70,7 @@ public class Package implements Serializable, GenericEntity {
 
     @Override
     public ArrayList<String> getIdNames() {
-        return (ArrayList<String>) List.of("packageID");
+        return new ArrayList<>(Arrays.asList("packageID"));
     }
     @Override
     public void setId(int id) {

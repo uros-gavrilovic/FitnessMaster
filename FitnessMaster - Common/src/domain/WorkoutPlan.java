@@ -3,6 +3,7 @@ package domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -82,16 +83,15 @@ public class WorkoutPlan implements Serializable, GenericEntity {
 
     @Override
     public ArrayList<String> getColumnNames() {
-        return (ArrayList<String>) List.of("workoutPlanID", "date", "memberID", "trainerID");
+        return new ArrayList<>(Arrays.asList("workoutPlanID", "date", "memberID", "trainerID"));
     }
     @Override
     public ArrayList<Object> getColumnValues() {
-        List<Object> columnValues = List.of(workoutPlanID, date, member.getMemberID(), trainer.getTrainerID());
-        return (ArrayList<Object>) columnValues;
+                return new ArrayList<>(Arrays.asList(workoutPlanID, date, member.getMemberID(), trainer.getTrainerID()));
     }
     @Override
     public ArrayList<String> getIdNames() {
-        return (ArrayList<String>) List.of("workoutPlanID");
+        return new ArrayList<>(Arrays.asList("workoutPlanID"));
     }
     @Override
     public void setId(int id) {

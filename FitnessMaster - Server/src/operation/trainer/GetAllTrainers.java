@@ -15,25 +15,19 @@ public class GetAllTrainers extends AbstractGenericOperation{
     }
     @Override
     protected void executeOperation(GenericEntity entity) throws Exception {
-          ArrayList<ResultSet> rsList = repository.getAll(entity);
-          
-          for(ResultSet rs: rsList){
-              System.err.println(rs);
-              Trainer trainer = new Trainer();
-              
-              while (rs.next()) {                  
-                  trainer.setId(rs.getInt("trainerID"));
-                  trainer.setFirstName(rs.getString("firstName"));
-                  trainer.setLastName(rs.getString("lastName"));
-                  trainer.setHireDate(rs.getDate("hireDate").toLocalDate());
-                  trainer.setUsername(rs.getString("username"));
-                  trainer.setPassword(rs.getString("password"));
+        ResultSet rs = repository.getAll(entity);
+        while (rs.next()) {
+            Trainer t = new Trainer();
 
-                  System.err.println(trainer);
-                  trainers.add(trainer);
-              }
+            t.setId(rs.getInt("trainerID"));
+            t.setFirstName(rs.getString("firstName"));
+            t.setLastName(rs.getString("lastName"));
+            t.setHireDate(rs.getDate("hireDate").toLocalDate());
+            t.setUsername(rs.getString("username"));
+            t.setPassword(rs.getString("password"));
 
-          }
+            trainers.add(t);
+        }
     }
 
     public ArrayList<Trainer> getTrainers() {

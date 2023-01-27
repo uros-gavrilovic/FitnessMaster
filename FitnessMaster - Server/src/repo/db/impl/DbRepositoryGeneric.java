@@ -18,6 +18,7 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
 
                String query = "INSERT INTO " + entity.getTableName() + "(" + entity.getInsertColumnNames() + ")" +
                                          " VALUES (" + entity.getInsertColumnValues()+ ")";
+               System.out.println(query);
                
                PreparedStatement ps = connection.prepareStatement(query);
                ps.executeUpdate(query, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -41,6 +42,7 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                String query = "UPDATE " + entity.getTableName() +
                                           " SET " + entity.getUpdateSet() +
                                           " WHERE " + entity.getUpdateWhere();
+              System.out.println(query);
                
                PreparedStatement ps = connection.prepareStatement(query);
                ps.executeUpdate(query, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -64,6 +66,7 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
 
                String query = "DELETE FROM " + entity.getTableName()
                                      + " WHERE " + entity.getUpdateWhere();
+              System.out.println(query);
 
                PreparedStatement ps = connection.prepareStatement(query);
                ps.executeUpdate(query);
@@ -80,6 +83,7 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                String query = "SELECT *" 
                                      + " FROM " + entity.getTableName()
                                      + " WHERE " + entity.getUpdateWhere();
+              System.out.println(query);
 
                PreparedStatement ps = connection.prepareStatement(query);
                ResultSet rs = ps.executeQuery();
@@ -94,22 +98,18 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
           }
      }
      @Override
-     public ArrayList<ResultSet> getAll(GenericEntity entity) throws Exception{
+     public ResultSet getAll(GenericEntity entity) throws Exception{
           try {
               ArrayList<ResultSet> results = new ArrayList<>();
               
               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
               String query = "SELECT *"
                                      + " FROM " + entity.getTableName();
+              System.out.println(query);
 
               PreparedStatement ps = connection.prepareStatement(query);
               ResultSet rs = ps.executeQuery();
-
-              while (rs.next()) {
-                  results.add(rs);
-              }
-
-              return results;
+              return rs;
           } catch (SQLException ex) {
               throw ex;
           }

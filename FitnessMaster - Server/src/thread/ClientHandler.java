@@ -15,122 +15,50 @@ import java.util.logging.Logger;
 
 public class ClientHandler extends Thread {
     Socket socket;
-    Sender sender;
-    Receiver receiver;
     Trainer client;
+ 
+    Request request;
+    Response response;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
-        this.sender = new Sender(socket);
-        this.receiver = new Receiver(socket);
+        
+        this.request = new Request();
+        this.response = new Response();
     }
 
     @Override
     public void run() {
         while (true) {
             try {
-                Request request = (Request) new Receiver(socket).receive();
+                request = (Request) new Receiver(socket).receive();
                 System.out.println(request); 
-                
-                Response response = new Response();
-                
+
                 if (request != null) {
                     switch (request.getOperation()) {
                         case LOG_IN:
-                            try {
-                                String username = ((Trainer) request.getArgument()).getUsername();
-                                String password = ((Trainer) request.getArgument()).getPassword();
-
-                                Trainer trainer = Controller.getInstance().login(username, password);
-                                this.client = trainer;
-                                response.setResponseType(ResponseType.SUCCESS);
-                                response.setResult(trainer);
-                            } catch (Exception ex) {
-                                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-                                response.setResponseType(ResponseType.ERROR);
-                                response.setException(ex);
-                            }
-                            break;
-                            
+                            logIn();
+                            break;                          
                         case DISCONNECT:
-                            try{
-                                Controller.getInstance().logout();
-                                System.out.println("SERVER: Client disconnected!");
-                                return;
-                            } catch (Exception ex){
-                                response.setResponseType(ResponseType.ERROR);
-                                response.setException(ex);
-                            }
-                            break;
-                            
+                            disconnect();
+                            return;                           
                         case ADD_MEMBER:
-                            try{
-                                Member member = ((Member) request.getArgument());
-                                
-                                Controller.getInstance().addMember(member);
-                                response.setResponseType(ResponseType.SUCCESS);
-                            } catch (Exception ex) {
-                                response.setResponseType(ResponseType.ERROR);
-                                response.setException(ex);
-                            }
-                            break;
-                            
+                            addMember();
+                            break;                           
                         case ADD_EXERCISE:
-                            try{
-                               Exercise exercise = (Exercise) request.getArgument();
-                               
-                               Controller.getInstance().addExercise(exercise);
-                               response.setResponseType(ResponseType.SUCCESS);
-                            } catch (Exception ex) {
-                                response.setResponseType(ResponseType.ERROR);
-                                response.setException(ex);
-                            }
-                            break;
-                            
+                            addExercise();
+                            break;                         
                         case DELETE_EXERCISE:
-                            try{
-                               Exercise exercise = (Exercise) request.getArgument();
-                               
-                               Controller.getInstance().deleteExercise(exercise);
-                               response.setResponseType(ResponseType.SUCCESS);
-                            } catch (Exception ex) {
-                                response.setResponseType(ResponseType.ERROR);
-                                response.setException(ex);
-                            }                            
-                            break;
-                            
+                            deleteExercise();
+                            break;                           
                         case UPDATE_EXERCISE:
-                             try{
-                               Exercise exercise = (Exercise) request.getArgument();
-                               
-                               Controller.getInstance().updateExercise(exercise);
-                               response.setResponseType(ResponseType.SUCCESS);
-                            } catch (Exception ex) {
-                                response.setResponseType(ResponseType.ERROR);
-                                response.setException(ex);
-                            }                           
-                            break;
-                            
+                            updateExercise();
+                            break;                            
                         case GET_MEMBERS:
-                                try{
-                                    ArrayList<Member> members = Controller.getInstance().getMembers();
-                                    response.setResult(members);
-                                    response.setResponseType(ResponseType.SUCCESS);
-                                } catch (Exception ex) {
-                                    response.setResponseType(ResponseType.ERROR);
-                                    response.setException(ex);
-                                }
-                                break;
-                                
+                            getMembers();
+                            break;                               
                         case GET_EXERCISES:
-                            try{
-                                ArrayList<Exercise> exercises = Controller.getInstance().getExercises();
-                                response.setResult(exercises);
-                                response.setResponseType(ResponseType.SUCCESS);
-                            } catch (Exception ex) {
-                                response.setResponseType(ResponseType.ERROR);
-                                response.setException(ex);
-                            }
+                            getExercises();
                             break;
                             
                         default:
@@ -140,6 +68,7 @@ public class ClientHandler extends Thread {
                     }
                     
                     try {
+                        System.err.println("TEST " + response);
                         new Sender(socket).send(response);
                     } catch (SenderException ex) {
                         System.out.println("ERROR: Failed to send response.");
@@ -148,6 +77,92 @@ public class ClientHandler extends Thread {
             } catch (ReceiverException ex) {
                 System.out.println("ERROR: Failed to receive request.");
             }
+        }
+    }
+
+    private void getExercises() {
+        try {
+            ArrayList<Exercise> exercises = Controller.getInstance().getExercises();
+            response.setResult(exercises);
+            response.setResponseType(ResponseType.SUCCESS);
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void getMembers() {
+        try {
+            ArrayList<Member> members = Controller.getInstance().getMembers();
+            response.setResult(members);
+            response.setResponseType(ResponseType.SUCCESS);
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void updateExercise() {
+        try {
+            Exercise exercise = (Exercise) request.getArgument();
+            Controller.getInstance().updateExercise(exercise);
+            response.setResponseType(ResponseType.SUCCESS);
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void deleteExercise() {
+        try {
+            Exercise exercise = (Exercise) request.getArgument();
+            Controller.getInstance().deleteExercise(exercise);
+            response.setResponseType(ResponseType.SUCCESS);
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void addExercise() {
+        try {
+            Exercise exercise = (Exercise) request.getArgument();
+            Controller.getInstance().addExercise(exercise);
+            response.setResponseType(ResponseType.SUCCESS);
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void addMember() {
+        try {
+            Member member = ((Member) request.getArgument());
+            Controller.getInstance().addMember(member);
+            response.setResponseType(ResponseType.SUCCESS);
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void disconnect() {
+        try {
+            Controller.getInstance().logout();
+            System.out.println("SERVER: Client disconnected!");
+            return;
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void logIn() {
+        try {
+            String username = ((Trainer) request.getArgument()).getUsername();
+            String password = ((Trainer) request.getArgument()).getPassword();
+            
+            Trainer trainer = Controller.getInstance().login(username, password);
+            this.client = trainer;
+            response.setResponseType(ResponseType.SUCCESS);
+            response.setResult(trainer);
+        } catch (Exception ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
         }
     }
 

@@ -9,7 +9,7 @@ import operation.AbstractGenericOperation;
 import java.sql.ResultSet;
 
 public class GetAllExercises extends AbstractGenericOperation {
-     private ArrayList<Exercise> exercises;
+     private ArrayList<Exercise> exercises = new ArrayList<>();
 
      @Override
      protected void preconditions(GenericEntity entity) throws Exception {
@@ -17,17 +17,17 @@ public class GetAllExercises extends AbstractGenericOperation {
      }
      @Override
      protected void executeOperation(GenericEntity entity) throws Exception {
-          ArrayList<ResultSet> rsList = repository.getAll(entity);
-          for(ResultSet rs: rsList){
-              Exercise exercise = new Exercise();
-              
-              exercise.setId(rs.getInt("exerciseID"));
-              exercise.setName(rs.getString("name"));
-              exercise.setBodyPart(BodyPart.valueOf(rs.getString("bodyPart")));
-              exercise.setCategory(Category.valueOf(rs.getString("category")));
-              
-              exercises.add(exercise);
-          }
+          ResultSet rs = repository.getAll(entity);
+          
+         while (rs.next()) {
+             Exercise e = new Exercise();
+             e.setExerciseID(rs.getInt("exerciseID"));
+             e.setName(rs.getString("name"));
+             e.setBodyPart(BodyPart.valueOf(rs.getString("bodyPart")));
+             e.setCategory(Category.valueOf(rs.getString("category")));
+
+             exercises.add(e);
+         }
      }
 
      public ArrayList<Exercise> getExercises() {

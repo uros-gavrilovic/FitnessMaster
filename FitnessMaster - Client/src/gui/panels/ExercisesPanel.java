@@ -9,17 +9,12 @@ import communication.Sender;
 import domain.BodyPart;
 import domain.Category;
 import domain.Exercise;
-import domain.Member;
 import exceptions.ReceiverException;
 import exceptions.SenderException;
-import javax.swing.BorderFactory;
-import javax.swing.border.*;
 import gui.lib.*;
 import gui.models.ExerciseTableModel;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import gui.lib.Painter;
 import javax.swing.event.ListSelectionEvent;
@@ -32,6 +27,18 @@ public class ExercisesPanel extends javax.swing.JPanel {
     public ExercisesPanel(Socket socket) {
         this.socket = socket;
 
+        try {
+            Request request = new Request(Operation.GET_EXERCISES, null);
+            new Sender(socket).send(request);
+
+            Response response = (Response) new Receiver(socket).receive();
+            if (response.getResponseType().equals(ResponseType.SUCCESS)) {
+                exercises = (ArrayList<Exercise>) response.getResult();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error retreiving exercises list.\n" + ex.getMessage(), "Retreiving exercises", JOptionPane.ERROR_MESSAGE);
+        }
+        
         initComponents();
         prepareForm();
     }

@@ -2,6 +2,7 @@ package domain;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -79,9 +80,18 @@ public interface GenericEntity extends Serializable{
           Iterator<Object> it = columnValues.iterator();
           while(it.hasNext()){
                Object columnValue = it.next();
+               if(columnValue == null){
+                   if(it.hasNext()){
+                       sb.append("null"+ ", ");
+                   } else {
+                       sb.append("null");
+                   }
+                   continue;
+               }
+               
                String stringValue = columnValue.toString();
                
-               if(columnValue instanceof String || columnValue.getClass().isEnum()) {
+               if(columnValue instanceof String || columnValue.getClass().isEnum() || columnValue instanceof LocalDate) {
                     stringValue = "\"" + stringValue+ "\"";
                }
                if(it.hasNext()){

@@ -87,7 +87,7 @@ public class Controller {
          return ((GetAllMembers)operation).getMembers();
     }
     public ArrayList<Exercise> getExercises() throws Exception {
-         AbstractGenericOperation operation = new GetAllMembers();
+         AbstractGenericOperation operation = new GetAllExercises();
          operation.execute((GenericEntity) new Exercise());
          return ((GetAllExercises)operation).getExercises();
     }
@@ -101,7 +101,6 @@ public class Controller {
         ArrayList<Trainer> trainers = getTrainers();
         
         for (Trainer t : trainers) {
-            System.err.println("Comparing username " + t.getUsername() + " typed " + username + " \n Comparing password " + t.getPassword() + " to typed: " + password);
             if (t.getUsername().matches(username) && t.getPassword().matches(password)) {
                 return t;
             }

@@ -3,6 +3,7 @@ package domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -83,7 +84,7 @@ public class Membership implements Serializable, GenericEntity  {
     }
     @Override
     public ArrayList<String> getIdNames() {
-        return (ArrayList<String>) List.of("memberID", "packageID");
+        return new ArrayList<>(Arrays.asList("memberID", "packageID"));
     }
     @Override
     public ArrayList<Object> getIdValues() {

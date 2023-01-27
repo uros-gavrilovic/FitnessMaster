@@ -2,6 +2,7 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -84,21 +85,19 @@ public class WorkoutActivity implements Serializable, GenericEntity  {
 
     @Override
     public ArrayList<String> getColumnNames() {
-        return (ArrayList<String>) List.of("workoutPlanID", "ordinalNumber", "sets", "reps", "exerciseID");
+        return new ArrayList<>(Arrays.asList("workoutPlanID", "ordinalNumber", "sets", "reps", "exerciseID"));
     }
     @Override
     public ArrayList<Object> getColumnValues() {
-        List<Object> columnValues = List.of(workoutPlan.getWorkoutPlanID(), ordinalNumber, sets, reps, exercise.getExerciseID());
-        return (ArrayList<Object>) columnValues;
+        return new ArrayList<>(Arrays.asList(workoutPlan.getWorkoutPlanID(), ordinalNumber, sets, reps, exercise.getExerciseID()));
     }
     @Override
     public ArrayList<String> getIdNames() {
-        return (ArrayList<String>) List.of("workoutPlanID", "ordinalNumber");
+        return new ArrayList<>(Arrays.asList("workoutPlanID", "ordinalNumber"));
     }
     @Override
     public ArrayList<Object> getIdValues() {
-        List<Object> idValues = List.of(workoutPlan.getWorkoutPlanID(), ordinalNumber);
-        return (ArrayList<Object>) idValues;
+        return new ArrayList<>(Arrays.asList(workoutPlan.getWorkoutPlanID(), ordinalNumber));
     }
     @Override
     public void setId(int id) {

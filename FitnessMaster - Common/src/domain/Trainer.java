@@ -3,6 +3,7 @@ package domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -106,7 +107,7 @@ public class Trainer implements Serializable, GenericEntity{
 
     @Override
     public ArrayList<String> getIdNames() {
-          return  (ArrayList<String>) List.of("trainerID");
+        return new ArrayList<>(Arrays.asList("trainerID"));
     }
     @Override
     public void setId(int id) {

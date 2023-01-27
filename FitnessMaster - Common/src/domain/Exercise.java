@@ -3,6 +3,7 @@ package domain;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -84,7 +85,7 @@ public class Exercise implements Serializable, GenericEntity {
      
      @Override
      public ArrayList<String> getIdNames() {
-          return  (ArrayList<String>) List.of("exerciseID");
+          return  new ArrayList<>(Arrays.asList("exerciseID"));
      }
      @Override
      public void setId(int id) {

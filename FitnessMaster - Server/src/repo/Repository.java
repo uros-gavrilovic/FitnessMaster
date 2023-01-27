@@ -8,5 +8,5 @@ public interface Repository<GenericEntity> {
     void update(GenericEntity entity) throws Exception;
     void delete(GenericEntity entity) throws Exception;
     ResultSet find(GenericEntity entity) throws Exception;
-    ArrayList<ResultSet> getAll(GenericEntity entity) throws Exception;
+    ResultSet getAll(GenericEntity entity) throws Exception;
 }
