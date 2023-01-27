@@ -134,14 +134,10 @@ public class DashboardPanel extends javax.swing.JPanel {
 
      private void prepareForm() {
           if(server != null && server.isAlive()){
-              System.err.println("A");
                btnStatus.setText("DEACTIVATE");
                txtStatus.setText("ACTIVE");
                txtStatus.setBackground(new Color(0, 102, 0));
           } else {
-                            System.err.println("B");
-//               if(server == null) System.err.println("Server je null");
-               
                btnStatus.setText("ACTIVATE");
                txtStatus.setText("INACTIVE");
                txtStatus.setBackground(new Color(153, 0, 0));

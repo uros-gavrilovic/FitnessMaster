@@ -1,5 +1,6 @@
 package repo.db.impl;
 
+import domain.Exercise;
 import domain.GenericEntity;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -72,8 +73,9 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
           }
      }
      @Override
-     public GenericEntity find(GenericEntity entity) throws Exception {
+     public ResultSet find(GenericEntity entity) throws Exception {
           try {
+              GenericEntity result;
                Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
                String query = "SELECT *" 
@@ -88,31 +90,31 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                    
                }                  
                 
-               
-          } catch (SQLException ex) {
-               throw ex;
-          }
-     }
-     @Override
-     public ArrayList<GenericEntity> getAll() {
-          GenericEntity ge;
-          ArrayList<GenericEntity> result = new ArrayList<>();
-          try {
-               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
-
-               String query = "SELECT *" 
-                                      + " FROM " + ge.getTableName();
-
-               PreparedStatement ps = connection.prepareStatement(query);
-               ResultSet rs = ps.executeQuery();
-               
-               while(rs.next()){
-                    result.add(ge)
-               }                  
-                
-               
+               return null; // IZMENI
           } catch (SQLException ex) {
                throw ex;
           }
      }  // TODO
+     @Override
+     public ArrayList<GenericEntity> getAll(GenericEntity entity) throws Exception{
+          try {
+              ArrayList<GenericEntity> results = new ArrayList<>();
+              
+              Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
+              String query = "SELECT *"
+                                     + " FROM " + entity.getTableName();
+
+              PreparedStatement ps = connection.prepareStatement(query);
+              ResultSet rs = ps.executeQuery();
+
+              while (rs.next()) {
+                  
+                  result.add(entity);
+              }
+
+              return result;
+          } catch (SQLException ex) {
+              throw ex;
+          }
+    }
 }

@@ -2,9 +2,11 @@ package domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Member implements Serializable  {
+public class Member implements Serializable, GenericEntity  {
      int memberID;
      String firstName;
      String lastName;
@@ -113,4 +115,13 @@ public class Member implements Serializable  {
      public void setDateOfBirth(LocalDate dateOfBirth) {
           this.dateOfBirth = dateOfBirth;
      }
+
+    @Override
+    public ArrayList<String> getIdNames() {
+        return (ArrayList<String>) List.of("memberID");
+    }
+    @Override
+    public void setId(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

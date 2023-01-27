@@ -3,9 +3,8 @@ package domain;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,45 +83,8 @@ public class Exercise implements Serializable, GenericEntity {
      }
      
      @Override
-     public String getTableName() {
-          return this.getClass().getSimpleName();
-     }
-     @Override
-     public ArrayList<String> getColumnNames() {
-          ArrayList<String> columnNames = new ArrayList();
-          for (Field f : this.getClass().getDeclaredFields()) {
-               columnNames.add(f.getName());
-          }
-          return columnNames;
-     }
-     @Override
-     public ArrayList<Object> getColumnValues() {
-          ArrayList<Object> columnValues = new ArrayList<>();
-          ArrayList<String> columnNames = getColumnNames();
-          for (String columnName : columnNames) {
-               try {
-                    Field field = this.getClass().getDeclaredField(columnName);
-                    field.setAccessible(true);
-                    Object value = field.get(this);
-                    columnValues.add(value);
-               } catch (Exception ex) {
-                    Logger.getLogger(Exercise.class.getName()).log(Level.SEVERE, null, ex);
-               }
-
-          }
-          return columnValues;
-     }
-     @Override
      public ArrayList<String> getIdNames() {
-          ArrayList<String> idNames = new ArrayList<>();
-          idNames.add("exerciseID");
-          return idNames;
-     }
-     @Override
-     public ArrayList<Object> getIdValues() {
-          ArrayList<Object> idValues = new ArrayList<>();
-          idValues.add(exerciseID);
-          return idValues;
+          return  (ArrayList<String>) List.of("exerciseID");
      }
      @Override
      public void setId(int id) {

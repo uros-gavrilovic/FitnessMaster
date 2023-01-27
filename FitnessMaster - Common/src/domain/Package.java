@@ -1,9 +1,11 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Package implements Serializable {
+public class Package implements Serializable, GenericEntity {
      int packageID;
      String name;
      double price;
@@ -64,4 +66,13 @@ public class Package implements Serializable {
      public void setPrice(double price) {
           this.price = price;
      }
+
+    @Override
+    public ArrayList<String> getIdNames() {
+        return (ArrayList<String>) List.of("packageID");
+    }
+    @Override
+    public void setId(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

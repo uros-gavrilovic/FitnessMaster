@@ -1,15 +1,54 @@
 package domain;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public interface GenericEntity extends Serializable{
-     String getTableName();
-     ArrayList<String>getColumnNames();
-     ArrayList<Object> getColumnValues();
+    default String getTableName(){
+          return this.getClass().getSimpleName();
+    }
+    default ArrayList<String>getColumnNames(){
+        ArrayList<String> columnNames = new ArrayList();
+        for (Field f : this.getClass().getDeclaredFields()) {
+            columnNames.add(f.getName());
+        }
+        return columnNames;
+    }
+     default ArrayList<Object> getColumnValues(){
+         ArrayList<Object> columnValues = new ArrayList<>();
+         ArrayList<String> columnNames = getColumnNames();
+         for (String columnName : columnNames) {
+             try {
+                 Field field = this.getClass().getDeclaredField(columnName);
+                 field.setAccessible(true);
+                 Object value = field.get(this);
+                 columnValues.add(value);
+             } catch (Exception ex) {
+                 ex.getMessage();
+             }
+         }
+         return columnValues;
+     }
      ArrayList<String> getIdNames();
-     ArrayList<Object> getIdValues();
+     default ArrayList<Object> getIdValues(){
+         ArrayList<Object> idValues = new ArrayList<>();
+         ArrayList<String> idNames = getIdNames();
+         for (String columnName : idNames) {
+             try {
+                 Field field = this.getClass().getDeclaredField(columnName);
+                 field.setAccessible(true);
+                 Object value = field.get(this);
+                 idValues.add(value);
+             } catch (Exception ex) {
+                 ex.getMessage();
+             }
+         }
+         return idValues;
+     }
      
      default String getInsertColumnNames(){
           // Used for SQL queries to concatenate string into format:

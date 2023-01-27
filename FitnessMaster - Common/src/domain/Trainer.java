@@ -2,9 +2,11 @@ package domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Trainer implements Serializable {
+public class Trainer implements Serializable, GenericEntity{
      int trainerID;
      String firstName;
      String lastName;
@@ -101,4 +103,13 @@ public class Trainer implements Serializable {
      public void setPassword(String password) {
           this.password = password;
      }
+
+    @Override
+    public ArrayList<String> getIdNames() {
+          return  (ArrayList<String>) List.of("trainerID");
+    }
+    @Override
+    public void setId(int id) {
+        setTrainerID(id);
+    }
 }

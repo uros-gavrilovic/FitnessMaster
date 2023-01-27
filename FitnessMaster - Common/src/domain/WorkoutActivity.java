@@ -1,9 +1,11 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class WorkoutActivity implements Serializable  {
+public class WorkoutActivity implements Serializable, GenericEntity  {
     int ordinalNumber;
     int sets;
     int reps;
@@ -78,5 +80,28 @@ public class WorkoutActivity implements Serializable  {
     }
     public void setWorkoutPlan(WorkoutPlan workoutPlan) {
         this.workoutPlan = workoutPlan;
+    }
+
+    @Override
+    public ArrayList<String> getColumnNames() {
+        return (ArrayList<String>) List.of("workoutPlanID", "ordinalNumber", "sets", "reps", "exerciseID");
+    }
+    @Override
+    public ArrayList<Object> getColumnValues() {
+        List<Object> columnValues = List.of(workoutPlan.getWorkoutPlanID(), ordinalNumber, sets, reps, exercise.getExerciseID());
+        return (ArrayList<Object>) columnValues;
+    }
+    @Override
+    public ArrayList<String> getIdNames() {
+        return (ArrayList<String>) List.of("workoutPlanID", "ordinalNumber");
+    }
+    @Override
+    public ArrayList<Object> getIdValues() {
+        List<Object> idValues = List.of(workoutPlan.getWorkoutPlanID(), ordinalNumber);
+        return (ArrayList<Object>) idValues;
+    }
+    @Override
+    public void setId(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

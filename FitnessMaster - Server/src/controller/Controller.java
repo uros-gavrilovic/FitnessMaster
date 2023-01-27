@@ -1,22 +1,17 @@
 package controller;
 
 import domain.Exercise;
+import domain.GenericEntity;
 import domain.Member;
 import domain.Trainer;
 import java.util.ArrayList;
 import operation.AbstractGenericOperation;
-import operation.exercise.DeleteExercise;
-import operation.exercise.InsertExercise;
-import operation.exercise.UpdateExercise;
+import operation.member.*;
+import operation.exercise.*;
+import operation.trainer.*;
 import repo.Repository;
 import repo.db.*;
-import repo.db.impl.DbRepositoryExercise;
-import repo.db.impl.DbRepositoryMember;
-import repo.db.impl.DbRepositoryMembership;
-import repo.db.impl.DbRepositoryPackage;
-import repo.db.impl.DbRepositoryTrainer;
-import repo.db.impl.DbRepositoryWorkoutActivity;
-import repo.db.impl.DbRepositoryWorkoutPlan;
+import repo.db.impl.DbRepositoryGeneric;
 
 public class Controller {
 
@@ -31,13 +26,13 @@ public class Controller {
     final Repository repoPlan;
 
     public Controller() {
-        this.repoExercise = new DbRepositoryExercise();
-        this.repoMember = new DbRepositoryMember();
-        this.repoMembership = new DbRepositoryMembership();
-        this.repoPackage = new DbRepositoryPackage();
-        this.repoTrainer = new DbRepositoryTrainer();
-        this.repoActivity = new DbRepositoryWorkoutActivity();
-        this.repoPlan = new DbRepositoryWorkoutPlan();
+        this.repoExercise = new DbRepositoryGeneric();
+        this.repoMember = new DbRepositoryGeneric();
+        this.repoMembership = new DbRepositoryGeneric();
+        this.repoPackage = new DbRepositoryGeneric();
+        this.repoTrainer = new DbRepositoryGeneric();
+        this.repoActivity = new DbRepositoryGeneric();
+        this.repoPlan = new DbRepositoryGeneric();
     }
 
     public static Controller getInstance() {
@@ -48,96 +43,65 @@ public class Controller {
     }
 
     public void addMember(Member member) throws Exception {
-        ((DatabaseRepository) repoMember).connect();
-        try {
-            repoMember.insert(member);
-            ((DatabaseRepository) repoMember).commit();
-        } catch (Exception ex) {
-            ((DatabaseRepository) repoMember).rollback();
-        } finally {
-            ((DatabaseRepository) repoMember).disconnect();
-        }
+        AbstractGenericOperation operation = new InsertMember();
+        operation.execute(member);        
     }
     public void addExercise(Exercise exercise) throws Exception {
-//        ((DatabaseRepository) repoExercise).connect();
-//        try {
-//            repoExercise.insert(exercise);
-//            ((DatabaseRepository) repoExercise).commit();
-//        } catch (Exception ex) {
-//            ((DatabaseRepository) repoExercise).rollback();
-//        } finally {
-//            ((DatabaseRepository) repoExercise).disconnect();
-//        }
-
         AbstractGenericOperation operation = new InsertExercise();
         operation.execute(exercise);
     }
+    public void addTrainer(Trainer trainer) throws Exception {
+        AbstractGenericOperation operation = new InsertTrainer();
+        operation.execute(trainer);
+    }
 
     public void deleteMember(Member member) throws Exception {
-        ((DatabaseRepository) repoMember).connect();
-        try {
-            repoMember.delete(member);
-            ((DatabaseRepository) repoMember).commit();
-        } catch (Exception ex) {
-            ((DatabaseRepository) repoMember).rollback();
-        } finally {
-            ((DatabaseRepository) repoMember).disconnect();
-        }
+        AbstractGenericOperation operation = new DeleteMember();
+        operation.execute(member);
     }
     public void deleteExercise(Exercise exercise) throws Exception {
-//        ((DatabaseRepository) repoExercise).connect();
-//        try {
-//            repoExercise.delete(exercise);
-//            ((DatabaseRepository) repoExercise).commit();
-//        } catch (Exception ex) {
-//            ((DatabaseRepository) repoExercise).rollback();
-//        } finally {
-//            ((DatabaseRepository) repoExercise).disconnect();
-//        }
-
          AbstractGenericOperation operation = new DeleteExercise();
          operation.execute(exercise);
     }
-    
+    public void deleteTrainer(Trainer trainer) throws Exception {
+        AbstractGenericOperation operation = new DeleteTrainer();
+        operation.execute(trainer);
+    }
+        
     public void updateMember(Member member) throws Exception {
-        ((DatabaseRepository) repoMember).connect();
-        try {
-            repoMember.update(member);
-            ((DatabaseRepository) repoMember).commit();
-        } catch (Exception ex) {
-            ((DatabaseRepository) repoMember).rollback();
-        } finally {
-            ((DatabaseRepository) repoMember).disconnect();
-        }
+         AbstractGenericOperation operation = new UpdateMember();
+         operation.execute(member);            
     }
     public void updateExercise(Exercise exercise) throws Exception {
-//        ((DatabaseRepository) repoExercise).connect();
-//        try {
-//            repoExercise.update(exercise);
-//            ((DatabaseRepository) repoExercise).commit();
-//        } catch (Exception ex) {
-//            ((DatabaseRepository) repoExercise).rollback();
-//        } finally {
-//            ((DatabaseRepository) repoExercise).disconnect();
-//        }
-
          AbstractGenericOperation operation = new UpdateExercise();
          operation.execute(exercise);
     }
+    public void updateTrainer(Trainer trainer) throws Exception {
+        AbstractGenericOperation operation = new UpdateTrainer();
+        operation.execute(trainer);
+    }
     
     public ArrayList<Member> getMembers() throws Exception {
-        ((DatabaseRepository) repoMember).connect();
-        return repoMember.getAll();
+         AbstractGenericOperation operation = new GetAllMembers();
+         operation.execute((GenericEntity) new Member());
+         return ((GetAllMembers)operation).getMembers();
     }
     public ArrayList<Exercise> getExercises() throws Exception {
-        ((DatabaseRepository) repoExercise).connect();
-        return repoExercise.getAll();
+         AbstractGenericOperation operation = new GetAllMembers();
+         operation.execute((GenericEntity) new Exercise());
+         return ((GetAllExercises)operation).getExercises();
+    }
+    public ArrayList<Trainer> getTrainers() throws Exception {
+        AbstractGenericOperation operation = new GetAllTrainers();
+        operation.execute((GenericEntity) new Trainer());
+        return ((GetAllTrainers) operation).getTrainers();
     }
 
     public Trainer login(String username, String password) throws Exception {
-        ArrayList<Trainer> trainers = controller.repoTrainer.getAll();
-
+        ArrayList<Trainer> trainers = getTrainers();
+        
         for (Trainer t : trainers) {
+            System.err.println("Comparing username " + t.getUsername() + " typed " + username + " \n Comparing password " + t.getPassword() + " to typed: " + password);
             if (t.getUsername().matches(username) && t.getPassword().matches(password)) {
                 return t;
             }

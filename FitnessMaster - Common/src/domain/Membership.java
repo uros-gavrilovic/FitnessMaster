@@ -2,9 +2,11 @@ package domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Membership implements Serializable  {
+public class Membership implements Serializable, GenericEntity  {
     Member member;
     Package membershipPackage;
     LocalDate startDate;
@@ -68,5 +70,28 @@ public class Membership implements Serializable  {
     }
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public ArrayList<String> getColumnNames() {
+        return (ArrayList<String>) List.of("memberID", "packageID", "startDate", "endDate");
+    }
+    @Override
+    public ArrayList<Object> getColumnValues() {
+        List<Object> columnValues = List.of(member.getMemberID(), membershipPackage.getPackageID(), startDate, endDate);
+        return (ArrayList<Object>) columnValues;
+    }
+    @Override
+    public ArrayList<String> getIdNames() {
+        return (ArrayList<String>) List.of("memberID", "packageID");
+    }
+    @Override
+    public ArrayList<Object> getIdValues() {
+        List<Object> idValues = List.of(member.getMemberID(), membershipPackage.getPackageID());
+        return (ArrayList<Object>) idValues;
+    }
+    @Override
+    public void setId(int id) {
+        
     }
 }
