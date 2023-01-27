@@ -75,7 +75,6 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
      @Override
      public ResultSet find(GenericEntity entity) throws Exception {
           try {
-              GenericEntity result;
                Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
 
                String query = "SELECT *" 
@@ -86,19 +85,18 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
                ResultSet rs = ps.executeQuery();
                
                while(rs.next()){
-                   // if(entity instanceof Exercise) return new Exercise(rs.getString("naziv itd"), Category.OTHER, BodyPart.CORE)
-                   
+                   return rs;
                }                  
                 
-               return null; // IZMENI
+               return null; 
           } catch (SQLException ex) {
                throw ex;
           }
-     }  // TODO
+     }
      @Override
-     public ArrayList<GenericEntity> getAll(GenericEntity entity) throws Exception{
+     public ArrayList<ResultSet> getAll(GenericEntity entity) throws Exception{
           try {
-              ArrayList<GenericEntity> results = new ArrayList<>();
+              ArrayList<ResultSet> results = new ArrayList<>();
               
               Connection connection = DatabaseConnectionFactory.getInstance().getConnection();
               String query = "SELECT *"
@@ -108,11 +106,10 @@ public class DbRepositoryGeneric implements DatabaseRepository<GenericEntity>{
               ResultSet rs = ps.executeQuery();
 
               while (rs.next()) {
-                  
-                  result.add(entity);
+                  results.add(rs);
               }
 
-              return result;
+              return results;
           } catch (SQLException ex) {
               throw ex;
           }

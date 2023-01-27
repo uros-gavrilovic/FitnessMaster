@@ -2,10 +2,12 @@ package operation.trainer;
 
 import domain.GenericEntity;
 import domain.Trainer;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import operation.AbstractGenericOperation;
 
 public class FindTrainer extends AbstractGenericOperation{
-    Trainer trainer;
+    private Trainer trainer;
     
     @Override
     protected void preconditions(GenericEntity entity) throws Exception {
@@ -13,7 +15,15 @@ public class FindTrainer extends AbstractGenericOperation{
     }
      @Override
      protected void executeOperation(GenericEntity entity) throws Exception {
-           trainer = (Trainer) repository.find(entity);
+         ResultSet rs = repository.find(entity);
+         Trainer trainer = new Trainer();
+
+         trainer.setId(rs.getInt("trainerID"));
+         trainer.setFirstName(rs.getString("firstName"));
+         trainer.setLastName(rs.getString("lastName"));
+         trainer.setHireDate(rs.getDate("hireDate").toLocalDate());
+         trainer.setUsername(rs.getString("username"));
+         trainer.setPassword(rs.getString("password"));
      }
 
      public Trainer getTrainer() {

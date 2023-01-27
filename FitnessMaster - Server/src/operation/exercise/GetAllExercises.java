@@ -1,12 +1,15 @@
 package operation.exercise;
 
+import domain.BodyPart;
+import domain.Category;
 import domain.Exercise;
 import domain.GenericEntity;
 import java.util.ArrayList;
 import operation.AbstractGenericOperation;
+import java.sql.ResultSet;
 
 public class GetAllExercises extends AbstractGenericOperation {
-     ArrayList<GenericEntity> genericExercises;
+     private ArrayList<Exercise> exercises;
 
      @Override
      protected void preconditions(GenericEntity entity) throws Exception {
@@ -14,14 +17,20 @@ public class GetAllExercises extends AbstractGenericOperation {
      }
      @Override
      protected void executeOperation(GenericEntity entity) throws Exception {
-          genericExercises = repository.getAll(entity);
+          ArrayList<ResultSet> rsList = repository.getAll(entity);
+          for(ResultSet rs: rsList){
+              Exercise exercise = new Exercise();
+              
+              exercise.setId(rs.getInt("exerciseID"));
+              exercise.setName(rs.getString("name"));
+              exercise.setBodyPart(BodyPart.valueOf(rs.getString("bodyPart")));
+              exercise.setCategory(Category.valueOf(rs.getString("category")));
+              
+              exercises.add(exercise);
+          }
      }
 
      public ArrayList<Exercise> getExercises() {
-         ArrayList<Exercise> exercises = new ArrayList<>();
-         for(GenericEntity entity: genericExercises){
-             exercises.add((Exercise) entity);
-         }
           return exercises;
      }
 }

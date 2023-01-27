@@ -1,9 +1,7 @@
 package repo;
 
-import domain.GenericEntity;
 import java.util.ArrayList;
 import java.sql.ResultSet;
-import java.util.List;
 
 public interface Repository<GenericEntity> {
     void insert(GenericEntity entity) throws Exception;
