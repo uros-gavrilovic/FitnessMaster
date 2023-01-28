@@ -68,7 +68,6 @@ public class ClientHandler extends Thread {
                     }
                     
                     try {
-                        System.err.println("TEST " + response);
                         new Sender(socket).send(response);
                     } catch (SenderException ex) {
                         System.out.println("ERROR: Failed to send response.");
