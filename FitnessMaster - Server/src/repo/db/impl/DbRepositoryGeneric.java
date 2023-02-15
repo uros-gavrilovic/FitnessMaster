@@ -1,6 +1,5 @@
 package repo.db.impl;
 
-import domain.Exercise;
 import domain.GenericEntity;
 import java.sql.Connection;
 import java.sql.ResultSet;
