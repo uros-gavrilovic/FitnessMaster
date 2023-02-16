@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -84,8 +85,8 @@ public class Exercise implements Serializable, GenericEntity {
      }
      
      @Override
-     public ArrayList<String> getIdNames() {
-          return  new ArrayList<>(Arrays.asList("exerciseID"));
+     public HashSet<String> getIdNames() {
+          return  new HashSet(Arrays.asList("exerciseID"));
      }
      @Override
      public void setId(int id) {

@@ -4,46 +4,42 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.joining;
 
 public interface GenericEntity extends Serializable{
-    default String getTableName(){
-          return this.getClass().getSimpleName();
+    default String getTableName() {
+        return this.getClass().getSimpleName();
     }
-    default ArrayList<String>getColumnNames(){
-        ArrayList<String> columnNames = new ArrayList();
+    default HashMap<String, Object> getClassData() {
+        HashMap<String, Object> classData = new HashMap<>();
         for (Field f : this.getClass().getDeclaredFields()) {
-            columnNames.add(f.getName());
+            try {
+                f.setAccessible(true);
+                classData.put(f.getName(), f.get(this));
+            } catch (IllegalAccessException ex) {
+                ex.getMessage();
+            }
         }
-        return columnNames;
+
+        return classData;
     }
-     default ArrayList<Object> getColumnValues(){
-         ArrayList<Object> columnValues = new ArrayList<>();
-         ArrayList<String> columnNames = getColumnNames();
-         for (String columnName : columnNames) {
-             try {
-                 Field field = this.getClass().getDeclaredField(columnName);
-                 field.setAccessible(true);
-                 Object value = field.get(this);
-                 columnValues.add(value);
-             } catch (Exception ex) {
-                 ex.getMessage();
-             }
-         }
-         return columnValues;
-     }
-     ArrayList<String> getIdNames();
-     default ArrayList<Object> getIdValues(){
-         ArrayList<Object> idValues = new ArrayList<>();
-         ArrayList<String> idNames = getIdNames();
+    HashSet<String> getIdNames();
+    default HashMap<String, Object> getIdData(){
+         HashSet<String> idNames = getIdNames();
+         HashMap<String, Object> idData = new HashMap<>();
          for (String columnName : idNames) {
              try {
                  Field field = this.getClass().getDeclaredField(columnName);
                  field.setAccessible(true);
                  Object value = field.get(this);
-                 idValues.add(value);
+                 idData.put(columnName, field.get(this));
              } catch (Exception ex) {
                  ex.getMessage();
              }
@@ -51,55 +47,48 @@ public interface GenericEntity extends Serializable{
          return idValues;
      }
      
+    default Set<String> getColumnNames(){
+        return getClassData().keySet();
+    }
+    default Set<Object> getColumnValues(){
+        return getClassData().values().stream().collect(Collectors.toSet());
+    }
+    
      default String getInsertColumnNames(){
           // Used for SQL queries to concatenate string into format:
           // columnAName, columnBName, columnCName
-          
-          StringBuilder sb = new StringBuilder();
-          ArrayList<String> columnNames = getColumnNames();
-          
-          Iterator<String> it = columnNames.iterator();
-          while(it.hasNext()){
-               String columnName = it.next();
-               if(it.hasNext()){
-                    sb.append(columnName + ", ");
-               } else {
-                    sb.append(columnName);
-               }
-          }
-          
-          return sb.toString();
+
+         return String.join(",", getColumnNames());
      }
      default String getInsertColumnValues(){
           // Used for SQL queries to concatenate string into format:
           // columnAValue, columnBValue, columnCValue
-          
+
           StringBuilder sb = new StringBuilder();
-          ArrayList<Object> columnValues = getColumnValues();
+          Set<Object> columnValues = getColumnValues();
           
           Iterator<Object> it = columnValues.iterator();
           while(it.hasNext()){
                Object columnValue = it.next();
-               if(columnValue == null){
-                   if(it.hasNext()){
-                       sb.append("null"+ ", ");
-                   } else {
-                       sb.append("null");
-                   }
-                   continue;
-               }
                
-               String stringValue = columnValue.toString();
-               
-               if(columnValue instanceof String || columnValue.getClass().isEnum() || columnValue instanceof LocalDate) {
-                    stringValue = "\"" + stringValue+ "\"";
-               }
-               if(it.hasNext()){
-                    sb.append(stringValue + ", ");
-               } else {
-                    sb.append(stringValue);
-               }
-          }
+//               if(columnValue == null){
+//                   if(it.hasNext()){
+//                       sb.append("null"+ ", ");
+//                   } else {
+//                       sb.append("null");
+//                   }
+//                   continue;
+//               }
+
+             if (columnValue instanceof String || columnValue.getClass().isEnum() || columnValue instanceof LocalDate) {
+                 columnValue = "\"" + columnValue.toString() + "\"";
+             }
+             if (it.hasNext()) {
+                 sb.append(columnValue + ", ");
+             } else {
+                 sb.append(columnValue);
+             }
+         }
           
           return sb.toString();
      }
