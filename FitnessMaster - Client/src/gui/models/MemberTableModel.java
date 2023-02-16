@@ -5,6 +5,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import domain.Member;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class MemberTableModel extends AbstractTableModel{
     ArrayList<Member> members ;
@@ -30,16 +31,12 @@ public class MemberTableModel extends AbstractTableModel{
                 switch (columnIndex) {
                     case 0: return member.getFirstName();
                     case 1: return member.getLastName();
-                    case 2: return member.getGender().toString();
+                    case 2: return member.getGender();
                     case 3: return member.getAddress();
                     case 4: return member.getPhoneNumber();
-                    case 5: return member.getDateOfBirth();
-//                    case 5:       // TODO: Add membership status - (IN)ACTIVE
-//                        if(){
-//                            
-//                        } else {
-//                            
-//                        }
+                    case 5: 
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+                        return formatter.format(member.getDateOfBirth());
                     default: return "N/A";
                 }
             } catch (NullPointerException e) {

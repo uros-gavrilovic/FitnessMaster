@@ -2,12 +2,14 @@ package gui.panels;
 
 import gui.lib.*;
 import com.raven.datechooser.*;
+import validator.ValidateOperation;
 import communication.Operation;
 import communication.Receiver;
 import communication.Request;
 import communication.Response;
 import communication.ResponseType;
 import communication.Sender;
+import controller.Controller;
 import domain.Gender;
 import domain.Member;
 import java.awt.Color;
@@ -24,7 +26,12 @@ import javax.swing.border.LineBorder;
 import gui.lib.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import validator.ValidateStatus;
+import validator.Validator;
 
 public class AddMemberPanel extends javax.swing.JPanel {
     Socket socket;
@@ -119,11 +126,6 @@ public class AddMemberPanel extends javax.swing.JPanel {
         }
         ftxtPhoneNumber.setBorder(javax.swing.BorderFactory.createLineBorder(Painter.DARK));
         ftxtPhoneNumber.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
-        ftxtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ftxtPhoneNumberActionPerformed(evt);
-            }
-        });
 
         lblRequiredFields.setFont(new java.awt.Font("Segoe UI", 2, 17)); // NOI18N
         lblRequiredFields.setText("* - Required fields");
@@ -241,59 +243,27 @@ public class AddMemberPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSaveMemberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveMemberActionPerformed
-        if (validateData() == false) return;
-            String firstName = txtFirstName.getText();
-            String lastName = txtLastName.getText();
+        clearErrorBorders();
+        ValidateStatus validationStatus = Validator.getInstance().validate(ValidateOperation.VALIDATE_MEMBER_INFO, gatherData());
+        
+        if(validationStatus != ValidateStatus.OK) {
+            showError(validationStatus);
+            return;
+        } else {
+            clearErrorBorders();
+        }
+        
+        try {
+            Response response = Controller.getInstance(socket).saveMember(gatherData());
 
-            Gender gender;
-            try {
-                gender = (Gender) cboxGender.getSelectedItem();
-            } catch (Exception e) {
-                gender = null;
+            if (response.getResponseType().equals(ResponseType.SUCCESS)) {
+                JOptionPane.showMessageDialog(this, "Member sucessfully added!", "Adding new member", JOptionPane.INFORMATION_MESSAGE);
+                clearForm();
             }
-
-            String address;
-            if (!txtAddress.getText().isBlank()) {
-                address = txtAddress.getText();
-            } else {
-                address = null;
-            }
-
-            String phoneNumber;
-            if (!ftxtPhoneNumber.getText().matches("___/__-__-___")) { // TODO: Postoji li bolji nacin da se vidi da li je korisnik ostavio prazno
-                phoneNumber = ftxtPhoneNumber.getText();
-            } else {
-                phoneNumber = null;
-            }
-
-            LocalDate birthDate;
-            if (!txtBirthDate.getText().isBlank()) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-                birthDate = LocalDate.parse(txtBirthDate.getText(), formatter);
-            } else {
-                birthDate = null;
-            }
-
-            Member member = new Member(firstName, lastName, gender, address, phoneNumber, birthDate);
-            Request request = new Request(Operation.ADD_MEMBER, member);
-
-            try {
-                new Sender(socket).send(request);
-                Response response = (Response) new Receiver(socket).receive();
-                
-                if(response.getResponseType().equals(ResponseType.SUCCESS)){
-                    JOptionPane.showMessageDialog(this, "Member sucessfully added!", "Adding new member", JOptionPane.INFORMATION_MESSAGE);
-                    clearForm();
-                }
-                
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error while adding new member!\n" + ex.getMessage(), "Adding new member", JOptionPane.ERROR_MESSAGE);
-            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error while adding new member!\n" + ex.getMessage(), "Adding new member", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnSaveMemberActionPerformed
-
-    private void ftxtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtPhoneNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ftxtPhoneNumberActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSaveMember;
@@ -320,58 +290,12 @@ public class AddMemberPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtLastName;
     // End of variables declaration//GEN-END:variables
 
-    private boolean validateData() {
-        String firstName = txtFirstName.getText();
-        String lastName = txtLastName.getText();
-//        Object gender = cboxGender.getSelectedItem();
-//        String address = txtAddress.getText();
-//        String phoneNumber = lblPhoneNumber.getText();
-        // OPTIONAL FIELDS
-
-        Border defaultBorder = new LineBorder(Painter.DARK, 1);
-        Border redBorder = new LineBorder(Color.RED, 1);
-
-        if (firstName.trim().isEmpty()) {
-            txtFirstName.setBorder(redBorder);
-            txtErrorFirstName.setText("First name must be entered!");
-            return false;
-        } else {
-            txtFirstName.setBorder(defaultBorder);
-            txtErrorFirstName.setVisible(false);
-        }
-
-        if (lastName.trim().isEmpty()) {
-            txtLastName.setBorder(redBorder);
-            txtErrorLastName.setText("Last name must be entered!");
-            return false;
-        } else {
-            txtLastName.setBorder(defaultBorder);
-            txtErrorLastName.setVisible(false);
-        }
-
-        if (!txtBirthDate.getText().trim().isEmpty()) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
-            LocalDate birthDate = LocalDate.parse(txtBirthDate.getText(), formatter);
-            if (birthDate.isAfter(LocalDate.now()) || birthDate.isEqual(LocalDate.now())) {
-                txtBirthDate.setBorder(redBorder);
-                txtErrorBirthDate.setText("Date of birth must not be after or equal to current date.");
-                return false;
-            } else {
-                txtBirthDate.setBorder(defaultBorder);
-                txtErrorBirthDate.setVisible(false);
-            }
-        }
-
-        return true;
-    }
-
     private void prepareForm() {
         dateChooser.getTextRefernce().setText("");
         
         for(Gender g : Gender.values()) cboxGender.addItem(g);
         cboxGender.setSelectedItem(null);
     }
-
     private void clearForm() {
         txtFirstName.setText("");
         txtLastName.setText("");
@@ -379,5 +303,46 @@ public class AddMemberPanel extends javax.swing.JPanel {
         ftxtPhoneNumber.setValue(null);
         txtBirthDate.setText("");
         cboxGender.setSelectedItem(null);
+    }
+    private HashMap<String, Object> gatherData() {
+        HashMap<String, Object> data = new HashMap<>();
+
+        data.put("firstName", txtFirstName.getText());
+        data.put("lastName", txtLastName.getText());
+        data.put("gender", cboxGender.getSelectedItem());
+        data.put("address", txtAddress.getText());
+        data.put("phoneNumber", lblPhoneNumber.getText());
+        data.put("dateOfBirth", txtBirthDate.getText());
+
+        return data;
+    }
+
+    private void showError(ValidateStatus status) {
+        switch (status) {
+            case ERROR_FIRST_NAME:
+                addErrorBorder(txtFirstName, txtErrorFirstName, "Field first name musn't be empty!");
+                return;
+            case ERROR_LAST_NAME:
+                addErrorBorder(txtBirthDate, txtErrorLastName, "Field last name musn't be empty!");
+                return;
+            case ERROR_BIRTH_DATE:
+                addErrorBorder(txtBirthDate, txtErrorBirthDate, "Date of birth must not be after or equal to current date!");
+                return;
+        }
+    }
+    private void addErrorBorder(JTextField field, JLabel label, String message) {
+        Border redBorder =  new LineBorder(Color.RED, 1); 
+        label.setText(message);
+    }
+    private void clearErrorBorders(){
+        Border defaultBorder =  new LineBorder(Painter.DARK, 1);
+        
+        JTextField fieldsArray[] = {txtFirstName, txtLastName, txtBirthDate};
+        JLabel labelsArray[] = {txtErrorFirstName, txtErrorLastName, txtErrorBirthDate};
+        
+        for(int i=0; i<fieldsArray.length; i++){
+            fieldsArray[i].setBorder(defaultBorder);
+            labelsArray[i].setText("");
+        }
     }
 }

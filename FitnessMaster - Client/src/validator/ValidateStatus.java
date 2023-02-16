@@ -1,0 +1,17 @@
+package validator;
+
+public enum ValidateStatus {
+    OK,
+    
+    ERROR_FIRST_NAME,
+    ERROR_LAST_NAME,
+    ERROR_GENDER,
+    ERROR_ADDRESS,
+    ERROR_PHONE_NUMBER,
+    ERROR_BIRTH_DATE,
+    
+    ERROR_EXERCISE_NAME,
+    ERROR_EXERCISE_BODYPART,
+    ERROR_EXERCISE_CATEGORY
+    
+}

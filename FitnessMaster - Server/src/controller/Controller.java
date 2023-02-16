@@ -83,17 +83,17 @@ public class Controller {
     
     public ArrayList<Member> getMembers() throws Exception {
          AbstractGenericOperation operation = new GetAllMembers();
-         operation.execute((GenericEntity) new Member());
+         operation.execute(new Member());
          return ((GetAllMembers)operation).getMembers();
     }
     public ArrayList<Exercise> getExercises() throws Exception {
          AbstractGenericOperation operation = new GetAllExercises();
-         operation.execute((GenericEntity) new Exercise());
+         operation.execute(new Exercise());
          return ((GetAllExercises)operation).getExercises();
     }
     public ArrayList<Trainer> getTrainers() throws Exception {
         AbstractGenericOperation operation = new GetAllTrainers();
-        operation.execute((GenericEntity) new Trainer());
+        operation.execute(new Trainer());
         return ((GetAllTrainers) operation).getTrainers();
     }
 

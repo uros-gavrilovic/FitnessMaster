@@ -32,7 +32,7 @@ public class ClientHandler extends Thread {
         while (true) {
             try {
                 request = (Request) new Receiver(socket).receive();
-                System.out.println(request); 
+                System.err.println("aaaaa" + request); 
 
                 if (request != null) {
                     switch (request.getOperation()) {
@@ -41,22 +41,30 @@ public class ClientHandler extends Thread {
                             break;                          
                         case DISCONNECT:
                             disconnect();
-                            return;                           
+                            return;
+                            
                         case ADD_MEMBER:
                             addMember();
-                            break;                           
-                        case ADD_EXERCISE:
-                            addExercise();
-                            break;                         
-                        case DELETE_EXERCISE:
-                            deleteExercise();
-                            break;                           
-                        case UPDATE_EXERCISE:
-                            updateExercise();
-                            break;                            
+                            break;  
+                        case UPDATE_MEMBER:
+                            updateMember();
+                            break;
+                        case DELETE_MEMBER:
+                            deleteMember();
+                            break;
                         case GET_MEMBERS:
                             getMembers();
-                            break;                               
+                            break;
+                            
+                        case ADD_EXERCISE:
+                            addExercise();
+                            break;     
+                        case UPDATE_EXERCISE:
+                            updateExercise();
+                            break;
+                        case DELETE_EXERCISE:
+                            deleteExercise();
+                            break;                                
                         case GET_EXERCISES:
                             getExercises();
                             break;
@@ -133,6 +141,26 @@ public class ClientHandler extends Thread {
         try {
             Member member = ((Member) request.getArgument());
             Controller.getInstance().addMember(member);
+            response.setResponseType(ResponseType.SUCCESS);
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void updateMember() {
+        try {
+            Member member = ((Member) request.getArgument());
+            Controller.getInstance().updateMember(member);
+            response.setResponseType(ResponseType.SUCCESS);
+        } catch (Exception ex) {
+            response.setResponseType(ResponseType.ERROR);
+            response.setException(ex);
+        }
+    }
+    private void deleteMember() {
+        try {
+            Member member = ((Member) request.getArgument());
+            Controller.getInstance().deleteMember(member);
             response.setResponseType(ResponseType.SUCCESS);
         } catch (Exception ex) {
             response.setResponseType(ResponseType.ERROR);

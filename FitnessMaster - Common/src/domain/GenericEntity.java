@@ -119,9 +119,14 @@ public interface GenericEntity extends Serializable{
                String columnName = itNames.next();
                
                Object columnValue = itValues.next();
-               String stringValue = columnValue.toString();
-               if (columnValue instanceof String || columnValue.getClass().isEnum()) {
-                    stringValue = "\"" + stringValue + "\"";
+               String stringValue;
+               if(columnValue != null){
+                   stringValue = columnValue.toString();
+                   if (columnValue instanceof String || columnValue.getClass().isEnum() || columnValue instanceof LocalDate) {
+                       stringValue = "\"" + stringValue + "\"";
+                   }
+               } else {
+                   stringValue = null;
                }
 
                if(itNames.hasNext()){
